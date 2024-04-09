@@ -189,7 +189,7 @@ func main() {
 	}
 
 	if license {
-		fmt.Println("Copyright 2023 Isak Ruas")
+		fmt.Println("Copyright 2023-2024 Isak Ruas")
 		fmt.Println("Licensed under the Apache License, Version 2.0 (the 'License');")
 		fmt.Println("you may not use this file except in compliance with the License.")
 		fmt.Println("You may obtain a copy of the License at")
