@@ -307,14 +307,8 @@ for curve in "${curve_names[@]}"; do
     
     message=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 23 | head -n 1)
     
-    BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
-    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key"
-    
-    BOBPx=$(echo "$BOB" | cut -d' ' -f1)
-    BOBPy=$(echo "$BOB" | cut -d' ' -f2)
-    
-    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message")
-    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message""
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-encrypt -ecmo-encrypt-message "$message")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-encrypt -ecmo-encrypt-message "$message""
     
     EPx=$(echo "$E" | cut -d' ' -f1)
     EPy=$(echo "$E" | cut -d' ' -f2)
@@ -327,9 +321,33 @@ for curve in "${curve_names[@]}"; do
     
     ALIPx=$(echo "$ALI" | cut -d' ' -f1)
     ALIPy=$(echo "$ALI" | cut -d' ' -f2)
+
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-encrypt2 -ecmo-encrypt-px "$EPx" -ecmo-encrypt-py "$EPy" -ecmo-encrypt-j "$EJ" -ecmo-encrypt-r "$ER" -ecmo-encrypt-s "$ES" -ecmo-encrypt-toshare-public-key-px "$ALIPx" -ecmo-encrypt-toshare-public-key-py "$ALIPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-encrypt2 -ecmo-encrypt-px "$EPx" -ecmo-encrypt-py "$EPy" -ecmo-encrypt-j "$EJ" -ecmo-encrypt-r "$ER" -ecmo-encrypt-s "$ES" -ecmo-encrypt-toshare-public-key-px "$ALIPx" -ecmo-encrypt-toshare-public-key-py "$ALIPy""
     
-    D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
-    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy""
+    EPx=$(echo "$E" | cut -d' ' -f1)
+    EPy=$(echo "$E" | cut -d' ' -f2)
+    EJ=$(echo "$E" | cut -d' ' -f3)
+    ER=$(echo "$E" | cut -d' ' -f4)
+    ES=$(echo "$E" | cut -d' ' -f5)
+    
+    BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key"
+    
+    BOBPx=$(echo "$BOB" | cut -d' ' -f1)
+    BOBPy=$(echo "$BOB" | cut -d' ' -f2)
+
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$BOBPx" -ecmo-decrypt-toshare-public-key-py "$BOBPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$BOBPx" -ecmo-decrypt-toshare-public-key-py "$BOBPy""
+
+    EPx=$(echo "$E" | cut -d' ' -f1)
+    EPy=$(echo "$E" | cut -d' ' -f2)
+    EJ=$(echo "$E" | cut -d' ' -f3)
+    ER=$(echo "$E" | cut -d' ' -f4)
+    ES=$(echo "$E" | cut -d' ' -f5)
+
+    D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-decrypt2 -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-decrypt2 -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy""
 
     if [ "$message" != "$D" ]; then
         echo "  >  ECMO Error: $message != $D"
@@ -369,14 +387,8 @@ for curve in "${curve_names[@]}"; do
     
     message=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 23 | head -n 1)
     
-    BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
-    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key"
-    
-    BOBPx=$(echo "$BOB" | cut -d' ' -f1)
-    BOBPy=$(echo "$BOB" | cut -d' ' -f2)
-    
-    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message")
-    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message""
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-message "$message")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-message "$message""
     
     EPx=$(echo "$E" | cut -d' ' -f1)
     EPy=$(echo "$E" | cut -d' ' -f2)
@@ -389,9 +401,33 @@ for curve in "${curve_names[@]}"; do
     
     ALIPx=$(echo "$ALI" | cut -d' ' -f1)
     ALIPy=$(echo "$ALI" | cut -d' ' -f2)
+
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt2 -ecmo-encrypt-px "$EPx" -ecmo-encrypt-py "$EPy" -ecmo-encrypt-j "$EJ" -ecmo-encrypt-r "$ER" -ecmo-encrypt-s "$ES" -ecmo-encrypt-toshare-public-key-px "$ALIPx" -ecmo-encrypt-toshare-public-key-py "$ALIPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt2 -ecmo-encrypt-px "$EPx" -ecmo-encrypt-py "$EPy" -ecmo-encrypt-j "$EJ" -ecmo-encrypt-r "$ER" -ecmo-encrypt-s "$ES" -ecmo-encrypt-toshare-public-key-px "$ALIPx" -ecmo-encrypt-toshare-public-key-py "$ALIPy""
     
-    D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
-    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy""
+    EPx=$(echo "$E" | cut -d' ' -f1)
+    EPy=$(echo "$E" | cut -d' ' -f2)
+    EJ=$(echo "$E" | cut -d' ' -f3)
+    ER=$(echo "$E" | cut -d' ' -f4)
+    ES=$(echo "$E" | cut -d' ' -f5)
+    
+    BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key"
+    
+    BOBPx=$(echo "$BOB" | cut -d' ' -f1)
+    BOBPy=$(echo "$BOB" | cut -d' ' -f2)
+
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$BOBPx" -ecmo-decrypt-toshare-public-key-py "$BOBPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$BOBPx" -ecmo-decrypt-toshare-public-key-py "$BOBPy""
+
+    EPx=$(echo "$E" | cut -d' ' -f1)
+    EPy=$(echo "$E" | cut -d' ' -f2)
+    EJ=$(echo "$E" | cut -d' ' -f3)
+    ER=$(echo "$E" | cut -d' ' -f4)
+    ES=$(echo "$E" | cut -d' ' -f5)
+
+    D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt2 -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt2 -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy""
 
     if [ "$message" != "$D" ]; then
         echo "  >  ECMO Error: $message != $D"
@@ -402,6 +438,68 @@ done
 end_time=$(date +%s%N)
 execution_time=$((($end_time - $start_time) / 1000000))
 echo "  >  Finished, execution time: ${execution_time} ms"
+
+# echo "  >  Testing ECMO ASCII: ..."
+# curve_names=("secp192k1" "secp192r1" "secp256k1" "secp256r1" "secp384r1" "secp521r1")
+# start_time=$(date +%s%N)
+# for curve in "${curve_names[@]}"; do
+    
+#     curve_name="${curve%,*}"
+    
+#     P="${elliptic_curves[$curve_name,P]}"
+#     A="${elliptic_curves[$curve_name,A]}"
+#     B="${elliptic_curves[$curve_name,B]}"
+#     Gx="${elliptic_curves[$curve_name,Gx]}"
+#     Gy="${elliptic_curves[$curve_name,Gy]}"
+#     N="${elliptic_curves[$curve_name,N]}"
+#     H="${elliptic_curves[$curve_name,H]}"
+    
+#     R=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key F -ecmo-get-public-key)
+#     echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key F -ecmo-get-public-key"
+    
+#     S=$(./ecutils -ecmo -ecmo-ec-define -ecmo-ec-define-p "$P" -ecmo-ec-define-a "$A" -ecmo-ec-define-b "$B" -ecmo-ec-define-gx "$Gx" -ecmo-ec-define-gy "$Gy" -ecmo-ec-define-n "$N" -ecmo-ec-define-h "$H" -ecmo-private-key F -ecmo-get-public-key)
+#     echo "  >  ./ecutils -ecmo -ecmo-ec-define -ecmo-ec-define-p "$P" -ecmo-ec-define-a "$A" -ecmo-ec-define-b "$B" -ecmo-ec-define-gx "$Gx" -ecmo-ec-define-gy "$Gy" -ecmo-ec-define-n "$N" -ecmo-ec-define-h "$H" -ecmo-private-key F -ecmo-get-public-key"
+    
+#     if [ "$R" != "$S" ]; then
+#         echo "  >  ECMO GetPublicKey Error: $R != $S"
+#         exit 1
+#     fi
+    
+#     message=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 23 | head -n 1)
+    
+#     BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
+#     echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key"
+    
+#     BOBPx=$(echo "$BOB" | cut -d' ' -f1)
+#     BOBPy=$(echo "$BOB" | cut -d' ' -f2)
+    
+#     E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message")
+#     echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message""
+    
+#     EPx=$(echo "$E" | cut -d' ' -f1)
+#     EPy=$(echo "$E" | cut -d' ' -f2)
+#     EJ=$(echo "$E" | cut -d' ' -f3)
+#     ER=$(echo "$E" | cut -d' ' -f4)
+#     ES=$(echo "$E" | cut -d' ' -f5)
+    
+#     ALI=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-get-public-key)
+#     echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-get-public-key"
+    
+#     ALIPx=$(echo "$ALI" | cut -d' ' -f1)
+#     ALIPy=$(echo "$ALI" | cut -d' ' -f2)
+    
+#     D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
+#     echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy""
+
+#     if [ "$message" != "$D" ]; then
+#         echo "  >  ECMO Error: $message != $D"
+#         exit 1
+#     fi
+    
+# done
+# end_time=$(date +%s%N)
+# execution_time=$((($end_time - $start_time) / 1000000))
+# echo "  >  Finished, execution time: ${execution_time} ms"
 
 echo "  >  Testing EC Dot: ..."
 start_time=$(date +%s%N)

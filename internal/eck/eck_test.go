@@ -1,8 +1,8 @@
 package eck_test
 
 import (
-	"ecutils/ec"
-	"ecutils/eck"
+	"ecutils/internal/ec"
+	"ecutils/internal/eck"
 	"fmt"
 	"math/big"
 	"testing"

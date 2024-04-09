@@ -7,7 +7,7 @@
 package ecdh
 
 import (
-	"ecutils/ec"
+	"ecutils/internal/ec"
 	"math/big"
 )
 

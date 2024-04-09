@@ -2,8 +2,8 @@ package ecmo_test
 
 import (
 	"crypto/rand"
-	"ecutils/ec"
-	"ecutils/ecmo"
+	"ecutils/internal/ec"
+	"ecutils/internal/ecmo"
 	"math/big"
 	"testing"
 )
@@ -103,6 +103,7 @@ func generateRandomUnicodeString(length int) (string, error) {
 
 	return string(result), nil
 }
+
 func TestECMOEncryptAndDecryptUnicode(t *testing.T) {
 
 	curves := []string{"secp384r1", "secp521r1"}
@@ -130,7 +131,246 @@ func TestECMOEncryptAndDecryptUnicode(t *testing.T) {
 		}
 		bobPublicKey := bob.PublicKey()
 
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 10; i++ {
+			randomString, _ := generateRandomASCIIString(23)
+
+			P, j, r, s := alice.Encrypt(randomString)
+
+			P, j, r, s = bob.Encrypt2(P, j, r, s, &alicePublicKey)
+
+			P, j, r, s = alice.Decrypt(P, j, r, s, &bobPublicKey)
+
+			decrypt := bob.Decrypt2(P, j, r, s, &alicePublicKey)
+
+			if decrypt != randomString {
+				t.Errorf("Decrypt expected (%v), got (%v) for curve %s", "ecutils", decrypt, curveName)
+			}
+		}
+
+		for i := 0; i < 10; i++ {
+			randomString, _ := generateRandomUnicodeString(23)
+
+			P, j, r, s := alice.Encrypt(randomString)
+
+			P, j, r, s = bob.Encrypt2(P, j, r, s, &alicePublicKey)
+
+			P, j, r, s = alice.Decrypt(P, j, r, s, &bobPublicKey)
+
+			decrypt := bob.Decrypt2(P, j, r, s, &alicePublicKey)
+
+			if decrypt != randomString {
+				t.Errorf("Decrypt expected (%v), got (%v) for curve %s", "ecutils", decrypt, curveName)
+			}
+		}
+	}
+}
+
+func TestECMOEncryptAndDecryptASCII(t *testing.T) {
+
+	curves := []string{"secp192k1", "secp192r1", "secp256k1", "secp256r1", "secp384r1", "secp521r1"}
+
+	alicePrivateKey := new(big.Int)
+	alicePrivateKey.SetString("DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D", 16)
+
+	bobPrivateKey := new(big.Int)
+	bobPrivateKey.SetString("71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4", 16)
+
+	for _, curveName := range curves {
+		curve := ec.Get(curveName)
+
+		alice := ecmo.ECMO{
+			Curve:           &curve,
+			PrivateKey:      alicePrivateKey,
+			ECKEncodingType: "ascii",
+		}
+		alicePublicKey := alice.PublicKey()
+
+		bob := ecmo.ECMO{
+			Curve:           &curve,
+			PrivateKey:      bobPrivateKey,
+			ECKEncodingType: "ascii",
+		}
+		bobPublicKey := bob.PublicKey()
+
+		for i := 0; i < 10; i++ {
+			randomString, _ := generateRandomASCIIString(23)
+
+			P, j, r, s := alice.Encrypt(randomString)
+
+			P, j, r, s = bob.Encrypt2(P, j, r, s, &alicePublicKey)
+
+			P, j, r, s = alice.Decrypt(P, j, r, s, &bobPublicKey)
+
+			decrypt := bob.Decrypt2(P, j, r, s, &alicePublicKey)
+
+			if decrypt != randomString {
+				t.Errorf("Decrypt expected (%v), got (%v) for curve %s", "ecutils", decrypt, curveName)
+			}
+		}
+
+		for i := 0; i < 10; i++ {
+			randomString, _ := generateRandomUnicodeString(23)
+
+			P, j, r, s := alice.Encrypt(randomString)
+
+			P, j, r, s = bob.Encrypt2(P, j, r, s, &alicePublicKey)
+
+			P, j, r, s = alice.Decrypt(P, j, r, s, &bobPublicKey)
+
+			decrypt := bob.Decrypt2(P, j, r, s, &alicePublicKey)
+
+			if decrypt != randomString {
+				t.Errorf("Decrypt expected (%v), got (%v) for curve %s", "ecutils", decrypt, curveName)
+			}
+		}
+	}
+}
+
+func TestECMOEncrypt2Invalid(t *testing.T) {
+
+	alicePrivateKey := new(big.Int)
+	alicePrivateKey.SetString("DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D", 16)
+
+	bobPrivateKey := new(big.Int)
+	bobPrivateKey.SetString("71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4", 16)
+
+	curve := ec.Get("secp192k1")
+
+	alice := ecmo.ECMO{
+		Curve:           &curve,
+		PrivateKey:      alicePrivateKey,
+		ECKEncodingType: "unicode",
+	}
+	alicePublicKey := alice.PublicKey()
+
+	bob := ecmo.ECMO{
+		Curve:           &curve,
+		PrivateKey:      bobPrivateKey,
+		ECKEncodingType: "unicode",
+	}
+
+	randomString, _ := generateRandomUnicodeString(23)
+
+	P, j, r, s := alice.Encrypt(randomString)
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Expected a panic, but got none")
+		}
+	}()
+
+	bob.Encrypt2(P, j, s, r, &alicePublicKey)
+}
+
+func TestECMODecryptInvalid(t *testing.T) {
+
+	alicePrivateKey := new(big.Int)
+	alicePrivateKey.SetString("DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D", 16)
+
+	bobPrivateKey := new(big.Int)
+	bobPrivateKey.SetString("71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4", 16)
+
+	curve := ec.Get("secp192k1")
+
+	alice := ecmo.ECMO{
+		Curve:           &curve,
+		PrivateKey:      alicePrivateKey,
+		ECKEncodingType: "unicode",
+	}
+	alicePublicKey := alice.PublicKey()
+
+	bob := ecmo.ECMO{
+		Curve:           &curve,
+		PrivateKey:      bobPrivateKey,
+		ECKEncodingType: "unicode",
+	}
+	bobPublicKey := bob.PublicKey()
+
+	randomString, _ := generateRandomUnicodeString(23)
+
+	P, j, r, s := alice.Encrypt(randomString)
+
+	P, j, r, s = bob.Encrypt2(P, j, r, s, &alicePublicKey)
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Expected a panic, but got none")
+		}
+	}()
+
+	alice.Decrypt(P, j, s, r, &bobPublicKey)
+}
+
+func TestECMODecrypt2Invalid(t *testing.T) {
+
+	alicePrivateKey := new(big.Int)
+	alicePrivateKey.SetString("DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D", 16)
+
+	bobPrivateKey := new(big.Int)
+	bobPrivateKey.SetString("71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4", 16)
+
+	curve := ec.Get("secp192k1")
+
+	alice := ecmo.ECMO{
+		Curve:           &curve,
+		PrivateKey:      alicePrivateKey,
+		ECKEncodingType: "unicode",
+	}
+	alicePublicKey := alice.PublicKey()
+
+	bob := ecmo.ECMO{
+		Curve:           &curve,
+		PrivateKey:      bobPrivateKey,
+		ECKEncodingType: "unicode",
+	}
+	bobPublicKey := bob.PublicKey()
+
+	randomString, _ := generateRandomUnicodeString(23)
+
+	P, j, r, s := alice.Encrypt(randomString)
+
+	P, j, r, s = bob.Encrypt2(P, j, r, s, &alicePublicKey)
+
+	P, j, r, s = alice.Decrypt(P, j, r, s, &bobPublicKey)
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Expected a panic, but got none")
+		}
+	}()
+
+	bob.Decrypt2(P, j, s, r, &alicePublicKey)
+}
+
+/*
+func TestECMOEncryptAndDecryptUnicode(t *testing.T) {
+
+	curves := []string{"secp384r1", "secp521r1"}
+
+	alicePrivateKey := new(big.Int)
+	alicePrivateKey.SetString("DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D", 16)
+
+	bobPrivateKey := new(big.Int)
+	bobPrivateKey.SetString("71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4", 16)
+
+	for _, curveName := range curves {
+		curve := ec.Get(curveName)
+
+		alice := ecmo.ECMO{
+			Curve:           &curve,
+			PrivateKey:      alicePrivateKey,
+			ECKEncodingType: "unicode",
+		}
+		alicePublicKey := alice.PublicKey()
+
+		bob := ecmo.ECMO{
+			Curve:           &curve,
+			PrivateKey:      bobPrivateKey,
+			ECKEncodingType: "unicode",
+		}
+		bobPublicKey := bob.PublicKey()
+
+		for i := 0; i < 10; i++ {
 			randomString, _ := generateRandomASCIIString(23)
 
 			P, j, r, s := alice.Encrypt(randomString, &bobPublicKey)
@@ -142,7 +382,7 @@ func TestECMOEncryptAndDecryptUnicode(t *testing.T) {
 			}
 		}
 
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 10; i++ {
 			randomString, _ := generateRandomUnicodeString(23)
 
 			P, j, r, s := alice.Encrypt(randomString, &bobPublicKey)
@@ -183,7 +423,7 @@ func TestECMOEncryptAndDecryptASCII(t *testing.T) {
 		}
 		bobPublicKey := bob.PublicKey()
 
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 10; i++ {
 			randomString, _ := generateRandomASCIIString(23)
 
 			P, j, r, s := alice.Encrypt(randomString, &bobPublicKey)
@@ -195,7 +435,7 @@ func TestECMOEncryptAndDecryptASCII(t *testing.T) {
 			}
 		}
 
-		for i := 0; i < 50; i++ {
+		for i := 0; i < 10; i++ {
 			randomString, _ := generateRandomUnicodeString(23)
 
 			P, j, r, s := alice.Encrypt(randomString, &bobPublicKey)
@@ -208,6 +448,7 @@ func TestECMOEncryptAndDecryptASCII(t *testing.T) {
 		}
 	}
 }
+
 func TestECMODecryptInvalid(t *testing.T) {
 
 	alicePrivateKey := new(big.Int)
@@ -244,3 +485,4 @@ func TestECMODecryptInvalid(t *testing.T) {
 
 	bob.Decrypt(P, j, s, r, &alicePublicKey)
 }
+*/

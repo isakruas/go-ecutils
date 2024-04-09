@@ -6,7 +6,7 @@ GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 GOARCH := $(shell go env GOARCH)
 GOOS := $(shell go env GOOS)
 BUILDDATE := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
-CODEVERSION := "1.0.0"
+CODEVERSION := "1.1.0"
 CODEBUILDREVISION := $(shell git rev-parse HEAD)
 .PHONY: all dep build clean test coverage zip lint
 
@@ -15,7 +15,7 @@ all: build
 # Building Project
 build: dep
 	@echo "  >  Building binary for $(GOOS)/$(GOARCH)..."
-	GOARCH=$(GOARCH) GOOS=$(GOOS) BUILDDATE=$(BUILDDATE) CODEBUILDREVISION=$(CODEBUILDREVISION) go build -v -ldflags "-X main.GOOS=$(GOOS) -X main.GOARCH=$(GOARCH) -X main.CODEVERSION=$(CODEVERSION) -X main.CODEBUILDDATE=$(BUILDDATE) -X main.CODEBUILDREVISION=$(CODEBUILDREVISION)" $(PKG)
+	GOARCH=$(GOARCH) GOOS=$(GOOS) BUILDDATE=$(BUILDDATE) CODEBUILDREVISION=$(CODEBUILDREVISION) go build -v -ldflags "-X main.GOOS=$(GOOS) -X main.GOARCH=$(GOARCH) -X main.CODEVERSION=$(CODEVERSION) -X main.CODEBUILDDATE=$(BUILDDATE) -X main.CODEBUILDREVISION=$(CODEBUILDREVISION)" -o $(PKG) cmd/main.go
 	@./scripts/test_ecutils.sh;
 	@mv ${PROJECT_NAME} "${PROJECT_NAME}-${GOOS}-${GOARCH}"
 

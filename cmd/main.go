@@ -1,11 +1,12 @@
 package main
 
 import (
-	pkg_ec "ecutils/ec"
-	pkg_ecdh "ecutils/ecdh"
-	pkg_ecdsa "ecutils/ecdsa"
-	pkg_eck "ecutils/eck"
-	pkg_ecmo "ecutils/ecmo"
+	pkg_ec "ecutils/internal/ec"
+	pkg_ecdh "ecutils/internal/ecdh"
+	pkg_ecdsa "ecutils/internal/ecdsa"
+	pkg_eck "ecutils/internal/eck"
+	pkg_ecmo "ecutils/internal/ecmo"
+
 	"flag"
 	"fmt"
 	"math/big"
@@ -140,9 +141,9 @@ func main() {
 
 	// ECMO
 	var ecmoPrivateKey string
-	var ecmo, ecmoECDefine, ecmoGetPublicKey, ecmoEncrypt, ecmoDecrypt bool
+	var ecmo, ecmoECDefine, ecmoGetPublicKey, ecmoEncrypt, ecmoDecrypt, ecmoEncrypt2, ecmoDecrypt2 bool
 	var ecmoECGet, ecmoECDefineP, ecmoECDefineA, ecmoECDefineB, ecmoECDefineGx, ecmoECDefineGy, ecmoECDefineN, ecmoECDefineH string
-	var ecmoEncryptToSharePublicKeyPx, ecmoEncryptToSharePublicKeyPy, ecmoECKEncodingType, ecmoEncryptMessage, ecmoDecryptPx, ecmoDecryptPy, ecmoDecryptJ, ecmoDecryptR, ecmoDecryptS, ecmoDecryptToSharePublicKeyPx, ecmoDecryptToSharePublicKeyPy string
+	var ecmoEncryptToSharePublicKeyPx, ecmoEncryptToSharePublicKeyPy, ecmoECKEncodingType, ecmoEncryptMessage, ecmoDecryptPx, ecmoDecryptPy, ecmoDecryptJ, ecmoDecryptR, ecmoDecryptS, ecmoDecryptToSharePublicKeyPx, ecmoDecryptToSharePublicKeyPy, ecmoEncryptPx, ecmoEncryptPy, ecmoEncryptJ, ecmoEncryptR, ecmoEncryptS string
 
 	flag.BoolVar(&ecmo, "ecmo", false, "Activate the Massey–Omura Elliptic Curve protocol.")
 	flag.StringVar(&ecmoECGet, "ecmo-ec-get", "secp384r1", "Specify the Elliptic Curve for operations by its identifier. Supported curves: secp384r1, secp521r1.")
@@ -158,10 +159,17 @@ func main() {
 	flag.BoolVar(&ecmoGetPublicKey, "ecmo-get-public-key", false, "Retrieve the public key for the Massey–Omura protocol. Outputs in Hex(PX) Hex(PY) format.")
 	flag.StringVar(&ecmoECKEncodingType, "ecmo-eck-encoding-type", "unicode", "Specifies the encoding type to be used. Supported curves: secp384r1, secp521r1 for 'unicode' and secp192k1, secp192r1, secp256k1, secp256r1, secp384r1, secp521r1 for 'ascii'.")
 	flag.BoolVar(&ecmoEncrypt, "ecmo-encrypt", false, "Encode a message using the Massey–Omura protocol, outputs in Hex(Px), Hex(Py), Hex(J), Hex(R), Hex(S) format.")
+	flag.StringVar(&ecmoEncryptMessage, "ecmo-encrypt-message", "", "Specify the message to encode using the Massey–Omura protocol.")
+	flag.BoolVar(&ecmoEncrypt2, "ecmo-encrypt2", false, "Encode a message using the Massey–Omura protocol, outputs in Hex(Px), Hex(Py), Hex(J), Hex(R), Hex(S) format.")
+	flag.StringVar(&ecmoEncryptPx, "ecmo-encrypt-px", "", "Specify the x-coordinate of the point on the Elliptic Curve to decode. Must be in hexadecimal format.")
+	flag.StringVar(&ecmoEncryptPy, "ecmo-encrypt-py", "", "Specify the y-coordinate of the point on the Elliptic Curve to decode. Must be in hexadecimal format.")
+	flag.StringVar(&ecmoEncryptJ, "ecmo-encrypt-j", "", "Specify the 'j-invariant' of the Elliptic Curve point. Must be in hexadecimal format.")
+	flag.StringVar(&ecmoEncryptR, "ecmo-encrypt-r", "", "Specify the 'r-signature' of the Elliptic Curve point. Must be in hexadecimal format.")
+	flag.StringVar(&ecmoEncryptS, "ecmo-encrypt-s", "", "Specify the 's-signature' of the Elliptic Curve point. Must be in hexadecimal format.")
 	flag.StringVar(&ecmoEncryptToSharePublicKeyPx, "ecmo-encrypt-toshare-public-key-px", "", "Specify the x-coordinate of the public key to use for encoding.")
 	flag.StringVar(&ecmoEncryptToSharePublicKeyPy, "ecmo-encrypt-toshare-public-key-py", "", "Specify the y-coordinate of the public key to use for encoding.")
-	flag.StringVar(&ecmoEncryptMessage, "ecmo-encrypt-message", "", "Specify the message to encode using the Massey–Omura protocol.")
 	flag.BoolVar(&ecmoDecrypt, "ecmo-decrypt", false, "Decode a given point on the Elliptic Curve into a string message.")
+	flag.BoolVar(&ecmoDecrypt2, "ecmo-decrypt2", false, "Decode a given point on the Elliptic Curve into a string message.")
 	flag.StringVar(&ecmoDecryptPx, "ecmo-decrypt-px", "", "Specify the x-coordinate of the point on the Elliptic Curve to decode. Must be in hexadecimal format.")
 	flag.StringVar(&ecmoDecryptPy, "ecmo-decrypt-py", "", "Specify the y-coordinate of the point on the Elliptic Curve to decode. Must be in hexadecimal format.")
 	flag.StringVar(&ecmoDecryptJ, "ecmo-decrypt-j", "", "Specify the 'j-invariant' of the Elliptic Curve point. Must be in hexadecimal format.")
@@ -169,7 +177,6 @@ func main() {
 	flag.StringVar(&ecmoDecryptS, "ecmo-decrypt-s", "", "Specify the 's-signature' of the Elliptic Curve point. Must be in hexadecimal format.")
 	flag.StringVar(&ecmoDecryptToSharePublicKeyPx, "ecmo-decrypt-toshare-public-key-px", "", "Specify the x-coordinate of the public key to use for decoding.")
 	flag.StringVar(&ecmoDecryptToSharePublicKeyPy, "ecmo-decrypt-toshare-public-key-py", "", "Specify the y-coordinate of the public key to use for decoding.")
-
 	flag.Parse()
 
 	if info {
@@ -597,6 +604,23 @@ func main() {
 			return
 		}
 
+		// if ecmoEncrypt {
+		// 	Px := new(big.Int)
+		// 	Px.SetString(ecmoEncryptToSharePublicKeyPx, 16)
+
+		// 	Py := new(big.Int)
+		// 	Py.SetString(ecmoEncryptToSharePublicKeyPy, 16)
+
+		// 	bobPublicKey := pkg_ec.Point{
+		// 		Px: Px,
+		// 		Py: Py,
+		// 	}
+
+		// 	P, J, R, S := ecmo.Encrypt(ecmoEncryptMessage, &bobPublicKey)
+		// 	fmt.Printf("%X %X %X %X %X", P.Px, P.Py, J, R, S)
+		// 	return
+		// }
+
 		if ecmoEncrypt {
 			Px := new(big.Int)
 			Px.SetString(ecmoEncryptToSharePublicKeyPx, 16)
@@ -604,15 +628,85 @@ func main() {
 			Py := new(big.Int)
 			Py.SetString(ecmoEncryptToSharePublicKeyPy, 16)
 
-			bobPublicKey := pkg_ec.Point{
+			P, J, R, S := ecmo.Encrypt(ecmoEncryptMessage)
+
+			fmt.Printf("%X %X %X %X %X", P.Px, P.Py, J, R, S)
+			return
+		}
+		if ecmoEncrypt2 {
+			Px := new(big.Int)
+			Px.SetString(ecmoEncryptPx, 16)
+
+			Py := new(big.Int)
+			Py.SetString(ecmoEncryptPy, 16)
+
+			P := pkg_ec.Point{
 				Px: Px,
 				Py: Py,
 			}
 
-			P, J, R, S := ecmo.Encrypt(ecmoEncryptMessage, &bobPublicKey)
-			fmt.Printf("%X %X %X %X %X", P.Px, P.Py, J, R, S)
+			J := new(big.Int)
+			J.SetString(ecmoEncryptJ, 16)
+
+			R := new(big.Int)
+			R.SetString(ecmoEncryptR, 16)
+
+			S := new(big.Int)
+			S.SetString(ecmoEncryptS, 16)
+
+			PubKPx := new(big.Int)
+			PubKPx.SetString(ecmoEncryptToSharePublicKeyPx, 16)
+
+			PubKPy := new(big.Int)
+			PubKPy.SetString(ecmoEncryptToSharePublicKeyPy, 16)
+
+			bobPublicKey := pkg_ec.Point{
+				Px: PubKPx,
+				Py: PubKPy,
+			}
+
+			PEncrypted, JEncrypted, REncrypted, SEncrypted := ecmo.Encrypt2(&P, J, R, S, &bobPublicKey)
+
+			fmt.Printf("%X %X %X %X %X", PEncrypted.Px, PEncrypted.Py, JEncrypted, REncrypted, SEncrypted)
 			return
 		}
+
+		// if ecmoDecrypt {
+		// 	Px := new(big.Int)
+		// 	Px.SetString(ecmoDecryptPx, 16)
+
+		// 	Py := new(big.Int)
+		// 	Py.SetString(ecmoDecryptPy, 16)
+
+		// 	P := pkg_ec.Point{
+		// 		Px: Px,
+		// 		Py: Py,
+		// 	}
+
+		// 	J := new(big.Int)
+		// 	J.SetString(ecmoDecryptJ, 16)
+
+		// 	R := new(big.Int)
+		// 	R.SetString(ecmoDecryptR, 16)
+
+		// 	S := new(big.Int)
+		// 	S.SetString(ecmoDecryptS, 16)
+
+		// 	PubKPx := new(big.Int)
+		// 	PubKPx.SetString(ecmoDecryptToSharePublicKeyPx, 16)
+
+		// 	PubKPy := new(big.Int)
+		// 	PubKPy.SetString(ecmoDecryptToSharePublicKeyPy, 16)
+
+		// 	alicePublicKey := pkg_ec.Point{
+		// 		Px: PubKPx,
+		// 		Py: PubKPy,
+		// 	}
+
+		// 	decrypt := ecmo.Decrypt(&P, J, R, S, &alicePublicKey)
+		// 	fmt.Printf(decrypt)
+		// 	return
+		// }
 
 		if ecmoDecrypt {
 			Px := new(big.Int)
@@ -646,14 +740,52 @@ func main() {
 				Py: PubKPy,
 			}
 
-			decrypt := ecmo.Decrypt(&P, J, R, S, &alicePublicKey)
+			PDecrypted, JDecrypted, RDecrypted, SDecrypted := ecmo.Decrypt(&P, J, R, S, &alicePublicKey)
+
+			fmt.Printf("%X %X %X %X %X", PDecrypted.Px, PDecrypted.Py, JDecrypted, RDecrypted, SDecrypted)
+			return
+		}
+
+		if ecmoDecrypt2 {
+			Px := new(big.Int)
+			Px.SetString(ecmoDecryptPx, 16)
+
+			Py := new(big.Int)
+			Py.SetString(ecmoDecryptPy, 16)
+
+			P := pkg_ec.Point{
+				Px: Px,
+				Py: Py,
+			}
+
+			J := new(big.Int)
+			J.SetString(ecmoDecryptJ, 16)
+
+			R := new(big.Int)
+			R.SetString(ecmoDecryptR, 16)
+
+			S := new(big.Int)
+			S.SetString(ecmoDecryptS, 16)
+
+			PubKPx := new(big.Int)
+			PubKPx.SetString(ecmoDecryptToSharePublicKeyPx, 16)
+
+			PubKPy := new(big.Int)
+			PubKPy.SetString(ecmoDecryptToSharePublicKeyPy, 16)
+
+			alicePublicKey := pkg_ec.Point{
+				Px: PubKPx,
+				Py: PubKPy,
+			}
+
+			decrypt := ecmo.Decrypt2(&P, J, R, S, &alicePublicKey)
 			fmt.Printf(decrypt)
 			return
 		}
+
 		flag.PrintDefaults()
 		return
 	}
 
 	flag.PrintDefaults()
-	return
 }

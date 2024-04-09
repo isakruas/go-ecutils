@@ -11,10 +11,9 @@
 package ecmo
 
 import (
-	"ecutils/ec"
-	"ecutils/ecdh"
-	"ecutils/ecdsa"
-	"ecutils/eck"
+	"ecutils/internal/ec"
+	"ecutils/internal/ecdsa"
+	"ecutils/internal/eck"
 	"math/big"
 )
 
@@ -37,6 +36,7 @@ func (ecmo *ECMO) PublicKey() ec.Point {
 	)
 }
 
+/*
 // Encrypt encrypts a message using recipient's public key.
 // Returns encrypted message, encoded message, signature pair (r, s) and a temporary used key.
 func (ecmo *ECMO) Encrypt(message string, to *ec.Point) (*ec.Point, *big.Int, *big.Int, *big.Int) {
@@ -57,7 +57,43 @@ func (ecmo *ECMO) Encrypt(message string, to *ec.Point) (*ec.Point, *big.Int, *b
 	r, s := ecdsa.Signature(Q.Px)
 	return &Q, j, r, s
 }
+*/
 
+// Encrypt2 encrypts a message using the recipient's public key.
+// Returns the encrypted message point, the encoded message, and the signature pair (r, s).
+func (ecmo *ECMO) Encrypt(message string) (*ec.Point, *big.Int, *big.Int, *big.Int) {
+	eck := eck.ECK{
+		Curve:        ecmo.Curve,
+		EncodingType: ecmo.ECKEncodingType,
+	}
+	ecdsa := ecdsa.ECDSA{
+		Curve:      ecmo.Curve,
+		PrivateKey: new(big.Int).Set(ecmo.PrivateKey),
+	}
+	P, j := eck.Encode(message)
+	Q := ecmo.Curve.Trapdoor(P, ecmo.PrivateKey)
+	r, s := ecdsa.Signature(Q.Px)
+	return &Q, j, r, s
+}
+
+// Encrypt3 encrypts a message using recipient's public key and verifies the signature.
+// Returns the encrypted message point, the encoded message, the new signature pair (t, u),
+// and the new temporary key.
+func (ecmo *ECMO) Encrypt2(P *ec.Point, j *big.Int, r *big.Int, s *big.Int, got *ec.Point) (*ec.Point, *big.Int, *big.Int, *big.Int) {
+	ecdsa := ecdsa.ECDSA{
+		Curve:      ecmo.Curve,
+		PrivateKey: new(big.Int).Set(ecmo.PrivateKey),
+	}
+	valid := ecdsa.VerifySignature(P.Px, r, s, got)
+	if !valid {
+		panic("Invalid signature")
+	}
+	Q := ecmo.Curve.Trapdoor(P, ecmo.PrivateKey)
+	t, u := ecdsa.Signature(Q.Px)
+	return &Q, j, t, u
+}
+
+/*
 // Decrypt decodes the encoded message using private key.
 // Panics if signatures do not match.
 // Returns the decoded message after the verification of the signatures.
@@ -80,6 +116,45 @@ func (ecmo *ECMO) Decrypt(Q *ec.Point, j *big.Int, r *big.Int, s *big.Int, got *
 	}
 
 	P := ecmo.Curve.Trapdoor(Q, new(big.Int).ModInverse(ecdh.ToShare(got).Px, ecdsa.Curve.N))
+
+	return eck.Decode(&P, j)
+}
+*/
+
+// Decrypt2 decrypts a message using the recipient's private key and verifies the signature.
+// Returns the decrypted message point, the encoded message, the new signature pair (t, u),
+// and the new temporary key.
+func (ecmo *ECMO) Decrypt(Q *ec.Point, j *big.Int, r *big.Int, s *big.Int, got *ec.Point) (*ec.Point, *big.Int, *big.Int, *big.Int) {
+	ecdsa := ecdsa.ECDSA{
+		Curve:      ecmo.Curve,
+		PrivateKey: ecmo.PrivateKey,
+	}
+	valid := ecdsa.VerifySignature(Q.Px, r, s, got)
+	if !valid {
+		panic("Invalid signature")
+	}
+	P := ecmo.Curve.Trapdoor(Q, new(big.Int).ModInverse(ecmo.PrivateKey, ecdsa.Curve.N))
+	t, u := ecdsa.Signature(P.Px)
+	return &P, j, t, u
+}
+
+// Decrypt3 decrypts a message using the recipient's private key and verifies the signature.
+// Returns the decoded message.
+func (ecmo *ECMO) Decrypt2(Q *ec.Point, j *big.Int, r *big.Int, s *big.Int, got *ec.Point) string {
+	eck := eck.ECK{
+		Curve:        ecmo.Curve,
+		EncodingType: ecmo.ECKEncodingType,
+	}
+	ecdsa := ecdsa.ECDSA{
+		Curve:      ecmo.Curve,
+		PrivateKey: ecmo.PrivateKey,
+	}
+	valid := ecdsa.VerifySignature(Q.Px, r, s, got)
+	if !valid {
+		panic("Invalid signature")
+	}
+
+	P := ecmo.Curve.Trapdoor(Q, new(big.Int).ModInverse(ecmo.PrivateKey, ecdsa.Curve.N))
 
 	return eck.Decode(&P, j)
 }

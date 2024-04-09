@@ -4,7 +4,7 @@
 **ecutils**
 
 ## Versão do *Software*
-**1.0.0**
+**1.1.0**
 
 ## Descrição do *Software*
 
@@ -668,20 +668,13 @@ echo "  >  Concluído, tempo de execução: ${execution_time} ms"
 
 ```bash
 # Exibe uma mensagem informativa indicando que os testes ECMO estão sendo executados.
-echo "  >  Testando ECMO: ..."
-
-# Define as curvas elípticas a serem testadas.
-curve_names=("secp384r1" "secp521r1")
-
-# Obtém o tempo de início da execução do loop.
+echo "  >  Testing ECMO ASCII: ..."
+curve_names=("secp192k1" "secp192r1" "secp256k1" "secp256r1" "secp384r1" "secp521r1")
 start_time=$(date +%s%N)
-
-# Loop que itera sobre as curvas elípticas definidas.
 for curve in "${curve_names[@]}"; do
-    # Extrai o nome da curva (por exemplo, "secp192k1") da variável curve.
+    
     curve_name="${curve%,*}"
-
-    # Obtém os parâmetros da curva elíptica a partir do array elliptic_curves.
+    
     P="${elliptic_curves[$curve_name,P]}"
     A="${elliptic_curves[$curve_name,A]}"
     B="${elliptic_curves[$curve_name,B]}"
@@ -690,62 +683,70 @@ for curve in "${curve_names[@]}"; do
     N="${elliptic_curves[$curve_name,N]}"
     H="${elliptic_curves[$curve_name,H]}"
     
-    # Executa a obtenção da chave pública do ECMO.
     R=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key F -ecmo-get-public-key)
-  
-    # Executa a definição da curva elíptica e a obtenção da chave pública do ECMO novamente.
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key F -ecmo-get-public-key"
+    
     S=$(./ecutils -ecmo -ecmo-ec-define -ecmo-ec-define-p "$P" -ecmo-ec-define-a "$A" -ecmo-ec-define-b "$B" -ecmo-ec-define-gx "$Gx" -ecmo-ec-define-gy "$Gy" -ecmo-ec-define-n "$N" -ecmo-ec-define-h "$H" -ecmo-private-key F -ecmo-get-public-key)
- 
-    # Compara as duas chaves públicas obtidas.
+    echo "  >  ./ecutils -ecmo -ecmo-ec-define -ecmo-ec-define-p "$P" -ecmo-ec-define-a "$A" -ecmo-ec-define-b "$B" -ecmo-ec-define-gx "$Gx" -ecmo-ec-define-gy "$Gy" -ecmo-ec-define-n "$N" -ecmo-ec-define-h "$H" -ecmo-private-key F -ecmo-get-public-key"
+    
     if [ "$R" != "$S" ]; then
-        echo "  >  Erro ECMO GetPublicKey: $R != $S"
+        echo "  >  ECMO GetPublicKey Error: $R != $S"
         exit 1
     fi
     
-    # Gera uma mensagem aleatória.
     message=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 23 | head -n 1)
     
-    # Executa a obtenção da chave pública de "BOB" usando ECMO.
-    BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
- 
-    # Extrai as coordenadas X e Y da chave pública de "BOB".
-    BOBPx=$(echo "$BOB" | cut -d' ' -f1)
-    BOBPy=$(echo "$BOB" | cut -d' ' -f2)
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-message "$message")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt -ecmo-encrypt-message "$message""
     
-    # Executa a criptografia da mensagem usando ECMO.
-    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-encrypt -ecmo-encrypt-toshare-public-key-px "$BOBPx" -ecmo-encrypt-toshare-public-key-py "$BOBPy" -ecmo-encrypt-message "$message")
- 
-    # Extrai as partes da mensagem criptografada (EPx, EPy, EJ, ER, ES).
     EPx=$(echo "$E" | cut -d' ' -f1)
     EPy=$(echo "$E" | cut -d' ' -f2)
     EJ=$(echo "$E" | cut -d' ' -f3)
     ER=$(echo "$E" | cut -d' ' -f4)
     ES=$(echo "$E" | cut -d' ' -f5)
     
-    # Obtém a chave pública de "ALICE" usando ECMO.
     ALI=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-get-public-key)
-  
-    # Extrai as coordenadas X e Y da chave pública de "ALICE".
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-get-public-key"
+    
     ALIPx=$(echo "$ALI" | cut -d' ' -f1)
     ALIPy=$(echo "$ALI" | cut -d' ' -f2)
+
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt2 -ecmo-encrypt-px "$EPx" -ecmo-encrypt-py "$EPy" -ecmo-encrypt-j "$EJ" -ecmo-encrypt-r "$ER" -ecmo-encrypt-s "$ES" -ecmo-encrypt-toshare-public-key-px "$ALIPx" -ecmo-encrypt-toshare-public-key-py "$ALIPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-encrypt2 -ecmo-encrypt-px "$EPx" -ecmo-encrypt-py "$EPy" -ecmo-encrypt-j "$EJ" -ecmo-encrypt-r "$ER" -ecmo-encrypt-s "$ES" -ecmo-encrypt-toshare-public-key-px "$ALIPx" -ecmo-encrypt-toshare-public-key-py "$ALIPy""
     
-    # Executa a descriptografia da mensagem criptografada usando ECMO.
-    D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
- 
-    # Compara a mensagem original com a mensagem descriptografada e verifica se elas são iguais.
+    EPx=$(echo "$E" | cut -d' ' -f1)
+    EPy=$(echo "$E" | cut -d' ' -f2)
+    EJ=$(echo "$E" | cut -d' ' -f3)
+    ER=$(echo "$E" | cut -d' ' -f4)
+    ES=$(echo "$E" | cut -d' ' -f5)
+    
+    BOB=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key)
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-get-public-key"
+    
+    BOBPx=$(echo "$BOB" | cut -d' ' -f1)
+    BOBPy=$(echo "$BOB" | cut -d' ' -f2)
+
+    E=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$BOBPx" -ecmo-decrypt-toshare-public-key-py "$BOBPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "DDC96AD92BFBD123D6DFDD0AF1F989CF87F1A1D5D083A30D" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$BOBPx" -ecmo-decrypt-toshare-public-key-py "$BOBPy""
+
+    EPx=$(echo "$E" | cut -d' ' -f1)
+    EPy=$(echo "$E" | cut -d' ' -f2)
+    EJ=$(echo "$E" | cut -d' ' -f3)
+    ER=$(echo "$E" | cut -d' ' -f4)
+    ES=$(echo "$E" | cut -d' ' -f5)
+
+    D=$(./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt2 -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy")
+    echo "  >  ./ecutils -ecmo -ecmo-ec-get "$curve_name" -ecmo-private-key "71288A9023BD17824F62C46172BC3B3802A7CF288B069FA4" -ecmo-eck-encoding-type "ascii" -ecmo-decrypt2 -ecmo-decrypt-px "$EPx" -ecmo-decrypt-py "$EPy" -ecmo-decrypt-j "$EJ" -ecmo-decrypt-r "$ER" -ecmo-decrypt-s "$ES" -ecmo-decrypt-toshare-public-key-px "$ALIPx" -ecmo-decrypt-toshare-public-key-py "$ALIPy""
+
     if [ "$message" != "$D" ]; then
-        echo "  >  Erro ECMO: $message != $D"
+        echo "  >  ECMO Error: $message != $D"
         exit 1
     fi
     
 done
-
-# Obtém o tempo de término da execução do loop.
 end_time=$(date +%s%N)
-
-# Calcula o tempo total de execução do loop e exibe-o.
 execution_time=$((($end_time - $start_time) / 1000000))
-echo "  >  Concluído, tempo de execução: ${execution_time} ms"
+echo "  >  Finished, execution time: ${execution_time} ms"
 ```
 
 ## Conclusão

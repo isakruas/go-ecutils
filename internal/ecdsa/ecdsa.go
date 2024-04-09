@@ -7,7 +7,7 @@
 package ecdsa
 
 import (
-	"ecutils/ec"
+	"ecutils/internal/ec"
 	"math/big"
 	"math/rand"
 	"time"

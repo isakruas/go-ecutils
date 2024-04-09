@@ -1,7 +1,7 @@
 package ec_test
 
 import (
-	"ecutils/ec"
+	"ecutils/internal/ec"
 	"math/big"
 	"testing"
 )

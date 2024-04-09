@@ -6,7 +6,7 @@
 package eck
 
 import (
-	"ecutils/ec"
+	"ecutils/internal/ec"
 	"fmt"
 	"math/big"
 )
