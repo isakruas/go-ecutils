@@ -23,9 +23,11 @@ jobs:
         env:
           PROJECT_NAME: ecutils
           CODEVERSION: ${{ github.ref_name }}  # Get the version from the tag
-          BUILDDATE: $(date -u +'%Y-%m-%dT%H:%M:%SZ')
           CODEBUILDREVISION: ${{ github.sha }}
         run: |
+          # Define the build date
+          BUILDDATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+
           PKG="$PROJECT_NAME"
           TARGETS=(
               "linux/386"
