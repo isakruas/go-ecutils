@@ -2,8 +2,8 @@ package ecmo_test
 
 import (
 	"crypto/rand"
-	"ecutils/internal/ec"
-	"ecutils/internal/ecmo"
+	"go-ecutils/internal/ec"
+	"go-ecutils/internal/ecmo"
 	"math/big"
 	"testing"
 )

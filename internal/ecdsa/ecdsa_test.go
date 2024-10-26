@@ -1,8 +1,8 @@
 package ecdsa_test
 
 import (
-	"ecutils/internal/ec"
-	"ecutils/internal/ecdsa"
+	"go-ecutils/internal/ec"
+	"go-ecutils/internal/ecdsa"
 	"math/big"
 	"testing"
 )

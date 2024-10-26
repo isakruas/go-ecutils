@@ -1,13 +1,13 @@
 // Package ecdsa provides an implementation of the Elliptic Curve Digital Signature Algorithm.
 // It provides methods to generate public and private keys, create digital signatures, and verify them.
-// This package relies on the supporting "ecutils/ec" package for operations on elliptic curves.
+// This package relies on the supporting "go-ecutils/ec" package for operations on elliptic curves.
 // Note: This package does not handle message hashing, only raw message values. It is up to the user to
 // preprocess the message as necessary before using the signing and verification methods.
 // Reference: https://pt.wikipedia.org/wiki/ECDSA
 package ecdsa
 
 import (
-	"ecutils/internal/ec"
+	"go-ecutils/internal/ec"
 	"math/big"
 	"math/rand"
 	"time"

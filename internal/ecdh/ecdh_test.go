@@ -1,8 +1,8 @@
 package ecdh_test
 
 import (
-	"ecutils/internal/ec"
-	"ecutils/internal/ecdh"
+	"go-ecutils/internal/ec"
+	"go-ecutils/internal/ecdh"
 	"math/big"
 	"testing"
 )

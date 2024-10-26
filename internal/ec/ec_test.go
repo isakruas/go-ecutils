@@ -1,7 +1,7 @@
 package ec_test
 
 import (
-	"ecutils/internal/ec"
+	"go-ecutils/internal/ec"
 	"math/big"
 	"testing"
 )

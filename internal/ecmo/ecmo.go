@@ -11,9 +11,9 @@
 package ecmo
 
 import (
-	"ecutils/internal/ec"
-	"ecutils/internal/ecdsa"
-	"ecutils/internal/eck"
+	"go-ecutils/internal/ec"
+	"go-ecutils/internal/ecdsa"
+	"go-ecutils/internal/eck"
 	"math/big"
 )
 

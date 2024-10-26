@@ -1,11 +1,11 @@
 package main
 
 import (
-	pkg_ec "ecutils/internal/ec"
-	pkg_ecdh "ecutils/internal/ecdh"
-	pkg_ecdsa "ecutils/internal/ecdsa"
-	pkg_eck "ecutils/internal/eck"
-	pkg_ecmo "ecutils/internal/ecmo"
+	pkg_ec "go-ecutils/internal/ec"
+	pkg_ecdh "go-ecutils/internal/ecdh"
+	pkg_ecdsa "go-ecutils/internal/ecdsa"
+	pkg_eck "go-ecutils/internal/eck"
+	pkg_ecmo "go-ecutils/internal/ecmo"
 
 	"flag"
 	"fmt"
