@@ -1,352 +1,352 @@
-# Documentação do *Software* "ecutils"
+# *Software* Documentation "ecutils"
 
-## Nome do *Software*
+## *Software* Name
 **ecutils**
 
-## Versão do *Software*
+## Version of the *Software*
 **1.1.0**
 
-## Descrição do *Software*
+## *Software* Description
 
-O *ecutils* é uma aplicação de criptografia que oferece uma variedade de recursos e funcionalidades para operações relacionadas a Curvas Elípticas. Este *software* foi projetado para atender às necessidades de profissionais de segurança cibernética, desenvolvedores de *software* e qualquer pessoa que exija operações de criptografia de alto nível em suas atividades.
+*ecutils* is a cryptography application that offers a variety of features and functionalities for Elliptic Curve operations. This *software* was designed to meet the needs of cybersecurity professionals, software developers, and anyone requiring high-level cryptographic operations in their activities.
 
-## Autor
+## Author
 
-* **Isak Paulo de Andrade Ruas** - Especialista em criptografia de Curvas Elípticas
+* **Isak Paulo de Andrade Ruas** - Specialist in Elliptic Curve Cryptography
 
-## Finalidade
+## Purpose
 
-O *ecutils* tem como objetivo principal facilitar a execução de operações criptográficas avançadas usando Curvas Elípticas, garantindo a segurança e a privacidade dos dados.
+The main objective of *ecutils* is to facilitate the execution of advanced cryptographic operations using Elliptic Curves, ensuring both data security and privacy.
 
-## Características Principais
+## Key Features
 
-* **Geração de Curvas Elípticas:** O *software* permite a definição e criação de novas Curvas Elípticas, com a flexibilidade de especificar coeficientes, coordenadas e outros parâmetros essenciais.
+* **Elliptic Curve Generation:** The software allows the definition and creation of new Elliptic Curves, with flexibility in specifying coefficients, coordinates, and other essential parameters.
 
-* **Operações de Curva Elíptica:** Comandos como adição de pontos, multiplicação escalar e operações de ponto são suportados, tornando possível realizar cálculos complexos de criptografia.
+* **Elliptic Curve Operations:** Commands such as point addition, scalar multiplication, and point operations are supported, making it possible to perform complex cryptographic calculations.
 
-* **Suporte a Protocolos de Segurança:** O *ecutils* oferece suporte a uma variedade de protocolos de segurança baseados em Curva Elíptica, como Diffie-Hellman, Assinatura Digital e o protocolo Massey–Omura.
+* **Support for Security Protocols:** *ecutils* supports a variety of Elliptic Curve-based security protocols, such as Diffie-Hellman, Digital Signature, and the Massey–Omura protocol.
 
-## Descrições dos comandos do *software*
+## Commands Descriptions
 
-Aqui estão as descrições detalhadas dos comandos disponíveis no *software* *ecutils*:
+Here are detailed descriptions of the commands available in the *ecutils* software:
 
-##  Comandos gerais
+## General Commands
 ### -info
-Mostrar informações sobre a compilação e a versão do programa
+Show information about the program’s build and version
 
 ### -license
-Mostrar informações sobre a licença do programa
+Show information about the program’s license
 
-## Operações de Curva Elíptica
+## Elliptic Curve Operations
 
 ### -ec
-Este comando ativa as operações em Curvas Elípticas.
+This command activates Elliptic Curve operations.
 
 ### -ec-define
-Este comando ativa a definição de uma nova Curva Elíptica.
+This command activates the definition of a new Elliptic Curve.
 
 ### -ec-define-a string
-Este comando permite definir o coeficiente 'a' da Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'a' coefficient of the Elliptic Curve in hexadecimal format.
 
 ### -ec-define-b string
-Este comando permite definir o coeficiente 'b' da Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'b' coefficient of the Elliptic Curve in hexadecimal format.
 
 ### -ec-define-gx string
-Este comando permite definir a coordenada x do ponto base 'G' na Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'G' point's x-coordinate on the Elliptic Curve in hexadecimal format.
 
 ### -ec-define-gy string
-Este comando permite definir a coordenada y do ponto base 'G' na Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'G' point's y-coordinate on the Elliptic Curve in hexadecimal format.
 
 ### -ec-define-h string
-Este comando permite definir o cofator 'h' da Curva Elíptica em formato hexadecimal.
+This command allows you to define the Elliptic Curve's cofactor 'h' in hexadecimal format.
 
 ### -ec-define-n string
-Este comando permite definir a ordem 'n' do ponto base 'G' na Curva Elíptica em formato hexadecimal.
+This command allows you to define the order 'n' of the 'G' base point on the Elliptic Curve in hexadecimal format.
 
 ### -ec-define-p string
-Este comando permite definir o módulo primo 'p' da Curva Elíptica em formato hexadecimal.
+This command allows you to define the Elliptic Curve's prime modulus 'p' in hexadecimal format.
 
 ### -ec-dot
-Este comando realiza a adição dos pontos P e Q na Curva Elíptica e retorna o resultado em valores hexadecimais.
+This command performs the addition of points P and Q on the Elliptic Curve and returns the result in hexadecimal values.
 
 ### -ec-dot-px string
-Este comando especifica a coordenada x de P.
+This command specifies the x-coordinate of point P.
 
 ### -ec-dot-py string
-Este comando especifica a coordenada y de P.
+This command specifies the y-coordinate of point P.
 
 ### -ec-dot-qx string
-Este comando especifica a coordenada x de Q.
+This command specifies the x-coordinate of point Q.
 
 ### -ec-dot-qy string
-Este comando especifica a coordenada y de Q.
+This command specifies the y-coordinate of point Q.
 
 ### -ec-get string
-Este comando identifica a Curva Elíptica para operações. Curvas suportadas: secp192k1, secp192r1, secp224k1, secp224r1, secp256k1, secp256r1, secp384r1, secp521r1.
+This command identifies the Elliptic Curve for operations. Supported Curves: secp192k1, secp192r1, secp224k1, secp224r1, secp256k1, secp256r1, secp384r1, secp521r1.
 
 ### -ec-trapdoor
-Este comando realiza a operação de multiplicação escalar do Ponto G na Curva Elíptica.
+This command performs scalar multiplication of the base point G on the Elliptic Curve.
 
 ### -ec-trapdoor-gx string
-Este comando especifica a coordenada x do Ponto G.
+This command specifies the x-coordinate of point G.
 
 ### -ec-trapdoor-gy string
-Este comando especifica a coordenada y do Ponto G.
+This command specifies the y-coordinate of point G.
 
 ### -ec-trapdoor-k string
-Especifica o escalar K em formato hexadecimal. (padrão "B")
+Specifies the scalar K in hexadecimal format. (default "B")
 
-## Protocolo de Troca de Chave de Curva Elíptica Diffie Hellman (ECDH)
+## Elliptic Curve Diffie-Hellman Key Exchange Protocol (ECDH)
 
 ### -ecdh
-Este comando ativa o protocolo de Troca de Chave de Curva Elíptica Diffie Hellman (ECDH).
+This command activates the Elliptic Curve Diffie Hellman (ECDH) key exchange protocol.
 
 ### -ecdh-ec-define
-Este comando ativa a definição de uma nova Curva Elíptica para ECDH.
+This command activates the definition of a new Elliptic Curve for ECDH.
 
 ### -ecdh-ec-define-a string
-Este comando permite definir o coeficiente 'a' para a nova curva em formato hexadecimal.
+This command allows you to define the 'a' coefficient for the new curve in hexadecimal format.
 
 ### -ecdh-ec-define-b string
-Este comando permite definir o coeficiente 'b' para a nova curva em formato hexadecimal.
+This command allows you to define the 'b' coefficient for the new curve in hexadecimal format.
 
 ### -ecdh-ec-define-gx string
-Este comando permite definir a coordenada x do ponto base 'G' para a nova curva em formato hexadecimal.
+This command allows you to define the 'G' point's x-coordinate for the new curve in hexadecimal format.
 
 ### -ecdh-ec-define-gy string
-Este comando permite definir a coordenada y do ponto base 'G' para a nova curva em formato hexadecimal.
+This command allows you to define the 'G' point's y-coordinate for the new curve in hexadecimal format.
 
 ### -ecdh-ec-define-h string
-Este comando permite definir o cofator 'h' da nova curva em formato hexadecimal.
+This command allows you to define the cofactor 'h' for the new curve in hexadecimal format.
 
 ### -ecdh-ec-define-n string
-Este comando permite definir a ordem 'n' do ponto base 'G' para a nova curva em formato hexadecimal.
+This command allows you to define the 'G' point's order 'n' for the new curve in hexadecimal format.
 
 ### -ecdh-ec-define-p string
-Este comando permite definir o módulo primo 'p' da nova curva em formato hexadecimal.
+This command allows you to define the prime modulus 'p' of the new curve in hexadecimal format.
 
 ### -ecdh-ec-get string
-Este comando identifica a Curva Elíptica para uso no protocolo ECDH. Curvas suportadas: secp192k1, secp192r1, secp224k1, secp224r1, secp256k1, secp256r1, secp384r1, secp521r1.
+This command identifies the Elliptic Curve to be used in the ECDH protocol. Supported Curves: secp192k1, secp192r1, secp224k1, secp224r1, secp256k1, secp256r1, secp384r1, secp521r1.
 
 ### -ecdh-get-public-key
-Este comando recupera a chave pública para o protocolo ECDH e retorna o resultado em valores hexadecimais.
+This command retrieves the public key for the ECDH protocol and returns the result in hexadecimal values.
 
 ### -ecdh-private-key string
-Este comando especifica a chave privada para o protocolo ECDH em formato hexadecimal.
+This command specifies the private key for the ECDH protocol in hexadecimal format.
 
 ### -ecdh-toshare
-Este comando gera um canal de comunicação seguro, retornando um ponto comum em formato hexadecimal.
+This command generates a secure communication channel, returning a common point in hexadecimal format.
 
 ### -ecdh-toshare-public-key-px string
-Este comando especifica a coordenada x da chave pública.
+This command specifies the x-coordinate of the public key.
 
 ### -ecdh-toshare-public-key-py string
-Este comando especifica a coordenada y da chave pública.
+This command specifies the y-coordinate of the public key.
 
-## Algoritmo de Assinatura Digital de Curva Elíptica (ECDSA)
+## Elliptic Curve Digital Signature Algorithm (ECDSA)
 
 ### -ecdsa
-Este comando ativa o Algoritmo de Assinatura Digital de Curva Elíptica (ECDSA).
+This command activates the Elliptic Curve Digital Signature Algorithm (ECDSA).
 
 ### -ecdsa-ec-define
-Se definido como verdadeiro, permite a definição de novos parâmetros personalizados de Curva Elíptica.
+When set to true, allows the definition of customized Elliptic Curve parameters.
 
 ### -ecdsa-ec-define-a string
-Este comando permite definir o coeficiente 'a' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'a' coefficient of the new Elliptic Curve in hexadecimal format.
 
 ### -ecdsa-ec-define-b string
-Este comando permite definir o coeficiente 'b' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'b' coefficient of the new Elliptic Curve in hexadecimal format.
 
 ### -ecdsa-ec-define-gx string
-Este comando permite definir a coordenada x do ponto base 'G' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'G' base point’s x-coordinate for the new Elliptic Curve in hexadecimal format.
 
 ### -ecdsa-ec-define-gy string
-Este comando permite definir a coordenada y do ponto base 'G' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the 'G' base point’s y-coordinate of the new Elliptic Curve in hexadecimal format.
 
 ### -ecdsa-ec-define-h string
-Este comando permite definir o cofator 'h' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the Elliptic Curve's cofactor 'h' in hexadecimal format.
 
 ### -ecdsa-ec-define-n string
-Este comando permite definir a ordem 'n' do ponto base 'G' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the Elliptic Curve's 'G' point’s order 'n' in hexadecimal format.
 
 ### -ecdsa-ec-define-p string
-Este comando permite definir o módulo primo 'p' da nova Curva Elíptica em formato hexadecimal.
+This command allows you to define the Elliptic Curve's prime modulus 'p' in hexadecimal format.
 
 ### -ecdsa-ec-get string
-Especifica a Curva Elíptica específica para ECDSA. Curvas suportadas: secp192k1, secp192r1, secp224k1, secp224r1, secp256k1, secp256r1, secp384r1, secp521r1.
+Specifies the specific Elliptic Curve for ECDSA. Supported Curves: secp192k1, secp192r1, secp224k1, secp224r1, secp256k1, secp256r1, secp384r1, secp521r1.
 
 ### -ecdsa-get-public-key
-Se definido como verdadeiro, recupera a chave pública para ECDSA como um par de valores hexadecimais PX e PY.
+If set to true, retrieves the public key for ECDSA as a pair of hexadecimal values PX and PY.
 
 ### -ecdsa-private-key string
-Este comando especifica a chave privada para ECDSA em formato hexadecimal.
+This command specifies the private key for ECDSA in hexadecimal format.
 
 ### -ecdsa-signature
-Se definido como verdadeiro, gera uma assinatura ECDSA. Retorna os valores R e S da assinatura gerada em formato hexadecimal.
+If set to true, generates an ECDSA signature. Returns the R and S values of the generated signature in hexadecimal format.
 
 ### -ecdsa-signature-message string
-Este comando especifica a mensagem de origem a ser assinada, fornecida em formato hexadecimal.
+This command specifies the source message to be signed, provided in hexadecimal format.
 
 ### -ecdsa-verify-signature
-Se definido como verdadeiro, habilita a função de verificação de assinatura ECDSA. Retorna 1 se a assinatura fornecida for válida e 0 caso contrário.
+If set to true, enables ECDSA signature verification. Returns 1 if the provided signature is valid and 0 otherwise.
 
 ### -ecdsa-verify-signature-public-key-px string
-Este comando especifica a coordenada x da Chave Pública usada para a verificação da assinatura ECDSA, fornecida em formato hexadecimal.
+This command specifies the x-coordinate of the Public Key used to verify the ECDSA signature, provided in hexadecimal format.
 
 ### -ecdsa-verify-signature-public-key-py string
-Este comando especifica a coordenada y da Chave Pública usada para a verificação da assinatura ECDSA, fornecida em formato hexadecimal.
+This command specifies the y-coordinate of the Public Key used to verify the ECDSA signature, provided in hexadecimal format.
 
 ### -ecdsa-verify-signature-r string
-Este comando especifica o valor 'R' da assinatura ECDSA a ser verificado, fornecido em formato hexadecimal.
+This command specifies the signature’s 'R' value to be verified, provided in hexadecimal format.
 
 ### -ecdsa-verify-signature-s string
-Este comando especifica o valor 'S' da assinatura ECDSA a ser verificado, fornecido em formato hexadecimal.
+This command specifies the signature’s 'S' value to be verified, provided in hexadecimal format.
 
 ### -ecdsa-verify-signature-signed-message string
-Este comando especifica a mensagem original que foi assinada com ECDSA, fornecida em formato hexadecimal.
+This command specifies the original message that was signed with ECDSA, provided in hexadecimal format.
 
-## Codificação e Decodificação em Criptografia de Curva Elíptica
+## Elliptic Curve Encoding and Decoding in Cryptography
 
 ### -eck
-Este comando ativa operações de codificação e decodificação em Criptografia de Curva Elíptica.
+This command activates encoding and decoding operations in Elliptic Curve Cryptography.
 
 ### -eck-decode
-Este comando ativa a função de decodificação que converte um ponto na curva elíptica de volta para uma mensagem de string.
+This command activates the decode function that converts a point on the elliptic curve back to a message string.
 
 ### -eck-decode-j string
-Este comando especifica o 'invariante j' do ponto na curva elíptica, em formato hexadecimal, a ser decodificado.
+This command specifies the 'j-invariant' of the elliptic curve point, in hexadecimal format, to be decoded.
 
 ### -eck-decode-px string
-Este comando especifica a coordenada x do ponto na curva elíptica, em formato hexadecimal, a ser decodificado.
+This command specifies the x-coordinate of the elliptic curve point, in hexadecimal format, to be decoded.
 
 ### -eck-decode-py string
-Este comando especifica a coordenada y do ponto na curva elíptica, em formato hexadecimal, a ser decodificado.
+This command specifies the y-coordinate of the elliptic curve point, in hexadecimal format, to be decoded.
 
 ### -eck-ec-define
-Este comando permite a definição personalizada de uma Curva Elíptica.
+This command allows you to define a custom Elliptic Curve.
 
 ### -eck-ec-define-a string
-Este comando define 'a', o coeficiente da Curva Elíptica, em formato hexadecimal.
+This command defines 'a', the Elliptic Curve coefficient, in hexadecimal format.
 
 ### -eck-ec-define-b string
-Este comando define 'b', o coeficiente da Curva Elíptica, em formato hexadecimal.
+This command defines 'b', the Elliptic Curve coefficient, in hexadecimal format.
 
 ### -eck-ec-define-gx string
-Este comando define 'Gx', a coordenada x do ponto base 'G' na Curva Elíptica, em formato hexadecimal.
+This command defines 'Gx', the x-coordinate of the base point 'G' on the Elliptic Curve, in hexadecimal format.
 
 ### -eck-ec-define-gy string
-Este comando define 'Gy', a coordenada y do ponto base 'G' na Curva Elíptica, em formato hexadecimal.
+This command defines 'Gy', the y-coordinate of the base point 'G' on the Elliptic Curve, in hexadecimal format.
 
 ### -eck-ec-define-h string
-Este comando define 'h', o cofator da Curva Elíptica, em formato hexadecimal.
+This command defines 'h', the Elliptic Curve’s cofactor, in hexadecimal format.
 
 ### -eck-ec-define-n string
-Este comando define 'n', a ordem do ponto base 'G' na Curva Elíptica, em formato hexadecimal.
+This command defines 'n', the order of the base point 'G' on the Elliptic Curve, in hexadecimal format.
 
 ### -eck-ec-define-p string
-Este comando define 'p', o módulo primo da Curva Elíptica, em formato hexadecimal.
+This command defines 'p', the Elliptic Curve’s prime modulus, in hexadecimal format.
 
 ### -eck-ec-get string
-Este comando especifica a Curva Elíptica a ser usada para operações. Curvas suportadas: secp384r1, secp521r1.
+This command specifies the Elliptic Curve for operations. Supported Curves: secp384r1, secp521r1.
 
 ### -eck-encoding-type
-Este comando especifica o tipo de codificação a ser utilizado. Ele suporta as seguintes curvas para 'unicode': secp384r1 e secp521r1, e as seguintes curvas para 'ascii': secp192k1, secp192r1, secp256k1, secp256r1, secp384r1 e secp521r1. O valor padrão é 'unicode'.
+This command specifies the type of encoding to be used. It supports the following curves for 'unicode': secp384r1 and secp521r1, and the following curves for 'ascii': secp192k1, secp192r1, secp256k1, secp256r1, secp384r1, and secp521r1. The default value is 'unicode.'
 
 ### -eck-encode
-Este comando ativa a função de codificação que converte uma mensagem de string em um ponto na curva elíptica. A saída está em formato hexadecimal.
+This command activates the encode function that converts a message string into a point on the elliptic curve. The output is in hexadecimal format.
 
 ### -eck-encode-message string
-Este comando especifica a mensagem a ser codificada em um ponto na curva elíptica.
+This command specifies the message to be encoded into a point on the elliptic curve.
 
-## Protocolo Massey–Omura de Curva Elíptica
+## Massey–Omura Elliptic Curve Protocol
 
 ### -ecmo
-Este comando ativa o protocolo Massey–Omura de Curva Elíptica.
+This command activates the Massey–Omura Elliptic Curve protocol.
 
 ### -ecmo-decrypt
-Este comando decodifica um ponto dado na Curva Elíptica em uma mensagem de string.
+This command decodes a given point on the Elliptic Curve into a message string.
 
 ### -ecmo-decrypt-j string
-Este comando especifica o 'invariante j' do ponto na Curva Elíptica. Deve estar em formato hexadecimal.
+This command specifies the 'j-invariant' of the point on the Elliptic Curve, which should be in hexadecimal format.
 
 ### -ecmo-decrypt-px string
-Este comando especifica a coordenada x do ponto na Curva Elíptica a ser decodificado. Deve estar em formato hexadecimal.
+This command specifies the x-coordinate of the point on the Elliptic Curve to be decoded. It should be in hexadecimal format.
 
 ### -ecmo-decrypt-py string
-Este comando especifica a coordenada y do ponto na Curva Elíptica a ser decodificado. Deve estar em formato hexadecimal.
+This command specifies the y-coordinate of the point on the Elliptic Curve to be decoded. It should be in hexadecimal format.
 
 ### -ecmo-decrypt-r string
-Este comando especifica o 'r-signature' do ponto na Curva Elíptica. Deve estar em formato hexadecimal.
+This command specifies the 'r-signature' of the point on the Elliptic Curve. It should be in hexadecimal format.
 
 ### -ecmo-decrypt-s string
-Este comando especifica o 's-signature' do ponto na Curva Elíptica. Deve estar em formato hexadecimal.
+This command specifies the 's-signature' of the point on the Elliptic Curve. It should be in hexadecimal format.
 
 ### -ecmo-decrypt-toshare-public-key-px string
-Este comando especifica a coordenada x da chave pública a ser usada para decodificação.
+This command specifies the x-coordinate of the public key to be used for decryption.
 
 ### -ecmo-decrypt-toshare-public-key-py string
-Este comando especifica a coordenada y da chave pública a ser usada para decodificação.
+This command specifies the y-coordinate of the public key to be used for decryption.
 
 ### -ecmo-ec-define
-Este comando ativa a criação de uma nova Curva Elíptica.
+This command activates the creation of a new Elliptic Curve.
 
 ### -ecmo-ec-define-a string
-Este comando define o coeficiente 'a' da Curva Elíptica em formato hexadecimal.
+This command defines the 'a' coefficient of the Elliptic Curve in hexadecimal format.
 
 ### -ecmo-ec-define-b string
-Este comando define o coeficiente 'b' da Curva Elíptica em formato hexadecimal.
+This command defines the 'b' coefficient of the Elliptic Curve in hexadecimal format.
 
 ### -ecmo-ec-define-gx string
-Este comando define 'Gx', a coordenada x do ponto base 'G' na Curva Elíptica, em formato hexadecimal.
+This command defines 'Gx', the x-coordinate of the base point 'G' on the Elliptic Curve, in hexadecimal format.
 
 ### -ecmo-ec-define-gy string
-Este comando define 'Gy', a coordenada y do ponto base 'G' na Curva Elíptica, em formato hexadecimal.
+This command defines 'Gy', the y-coordinate of the base point 'G' on the Elliptic Curve, in hexadecimal format.
 
 ### -ecmo-ec-define-h string
-Este comando define 'h', o cofator da Curva Elíptica, em formato hexadecimal.
+This command defines 'h', the cofactor of the Elliptic Curve in hexadecimal format.
 
 ### -ecmo-ec-define-n string
-Este comando define 'n', a ordem do ponto base 'G' na Curva Elíptica, em formato hexadecimal.
+This command defines 'n', the order of the base point 'G' on the Elliptic Curve in hexadecimal format.
 
 ### -ecmo-ec-define-p string
-Este comando define 'p', o módulo primo 'p' da Curva Elíptica, em formato hexadecimal.
+This command defines 'p', the prime modulus 'p' of the Elliptic Curve in hexadecimal format.
 
 ### -ecmo-eck-encoding-type
-Este comando especifica o tipo de codificação a ser utilizado. Ele suporta as seguintes curvas para 'unicode': secp384r1 e secp521r1, e as seguintes curvas para 'ascii': secp192k1, secp192r1, secp256k1, secp256r1, secp384r1 e secp521r1. O valor padrão é 'unicode'.
+This command specifies the type of encoding to be used. It supports the following curves for 'unicode': secp384r1 and secp521r1, and the following curves for 'ascii': secp192k1, secp192r1, secp256k1, secp256r1, secp384r1, and secp521r1. The default value is 'unicode'.
 
 ### -ecmo-ec-get string
-Este comando especifica a Curva Elíptica a ser usada para operações. Curvas suportadas: secp384r1, secp521r1.
+This command specifies the Elliptic Curve for operations. Supported Curves: secp384r1, secp521r1.
 
 ### -ecmo-encrypt
-Este comando criptografa uma mensagem de string em um ponto na Curva Elíptica. A saída está em formato hexadecimal.
+This command encrypts a message string into a point on the Elliptic Curve. The output is in hexadecimal format.
 
 ### -ecmo-encrypt-message string
-Este comando especifica a mensagem a ser criptografada.
+This command specifies the message to be encrypted.
 
 ### -ecmo-encrypt-toshare-public-key-px string
-Este comando especifica a coordenada x da chave pública a ser usada para criptografia.
+This command specifies the x-coordinate of the public key to be used for encryption.
 
 ### -ecmo-encrypt-toshare-public-key-py string
-Este comando especifica a coordenada y da chave pública a ser usada para criptografia.
+This command specifies the y-coordinate of the public key to be used for encryption.
 
 ### -ecmo-get-public-key
-Este comando recupera a chave pública para o protocolo Massey–Omura. A saída está no formato Hex(PX) Hex(PY).
+This command retrieves the public key for the Massey–Omura protocol. The output is in the format Hex(PX) Hex(PY).
 
 ### -ecmo-private-key string
-Este comando especifica a chave privada para o protocolo Massey–Omura de Curva Elíptica em formato hexadecimal.
+This command specifies the private key for the Elliptic Curve Massey–Omura protocol in hexadecimal format.
 
-## Exemplos de Utilização
+## Usage Examples
 
-Primeiro, vamos definir alguns parâmetros para utilização durante os testes:
+First, let’s define some parameters to use during the tests:
 
 ```bash
 #!/bin/bash
 
-# Declara um array associativo chamado elliptic_curves para armazenar os parâmetros das curvas elípticas.
+# Declares an associative array named elliptic_curves to store the elliptic curve parameters.
 declare -A elliptic_curves
 
-# Define os parâmetros das curvas elípticas no array elliptic_curves.
-# Cada curva é identificada por um nome, como "secp192k1", e possui parâmetros como P, A, B, Gx, Gy, N e H.
+# Define the elliptic curve parameters in the elliptic_curves array.
+# Each curve is identified by a name, such as "secp192k1", and has parameters like P, A, B, Gx, Gy, N, and H.
 elliptic_curves["secp192k1,P"]="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFEE37"
 elliptic_curves["secp192k1,A"]="0"
 elliptic_curves["secp192k1,B"]="3"
@@ -411,25 +411,25 @@ elliptic_curves["secp521r1,Gy"]="011839296A789A3BC0045C8A5FB42C7D1BD998F54449579
 elliptic_curves["secp521r1,N"]="01FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA51868783BF2F966B7FCC0148F709A5D03BB5C9B8899C47AEBB6FB71E91386409"
 elliptic_curves["secp521r1,H"]="1"
 
-# Define uma lista de nomes de curvas elípticas para serem usados posteriormente.
+# Define a list of elliptic curve names to be used later.
 curve_names=("secp192k1" "secp192r1" "secp224k1" "secp224r1" "secp256k1" "secp256r1" "secp384r1" "secp521r1")
 ```
 
-### Testando EC
+### Testing EC
 
 ```bash
-# Inicia a execução do script e exibe uma mensagem informativa.
-echo "  >  Testando EC: ..."
+# Start script execution and display an informational message.
+echo "  >  Testing EC: ..."
 
-# Obtém o tempo de início da execução do loop.
+# Get the start time of the loop execution.
 start_time=$(date +%s%N)
 
-# Loop que itera sobre as curvas elípticas definidas.
+# Loop through the defined elliptic curves.
 for curve in "${curve_names[@]}"; do
-    # Extrai o nome da curva (por exemplo, "secp192k1") da variável curve.
+    # Extract the name of the curve (e.g. "secp192k1") from the curve variable.
     curve_name="${curve%,*}"
 
-    # Obtém os parâmetros da curva elíptica a partir do array elliptic_curves.
+    # Get the parameters of the elliptic curve from the elliptic_curves array.
     P="${elliptic_curves[$curve_name,P]}"
     A="${elliptic_curves[$curve_name,A]}"
     B="${elliptic_curves[$curve_name,B]}"
@@ -438,58 +438,58 @@ for curve in "${curve_names[@]}"; do
     N="${elliptic_curves[$curve_name,N]}"
     H="${elliptic_curves[$curve_name,H]}"
     
-    # Realiza uma operação de trapdoor com os parâmetros da curva e obtém o resultado em R.
+    # Perform a trapdoor operation with the curve parameters and get the result in R.
     R=$(./ecutils -ec -ec-get "$curve_name" -ec-trapdoor -ec-trapdoor-k F -ec-trapdoor-gx "$Gx" -ec-trapdoor-gy "$Gy")
 
-    # Realiza uma operação de definição de curva e trapdoor com os mesmos parâmetros e obtém o resultado em S.
+    # Perform a curve definition and trapdoor operation with the same parameters and get the result in S.
     S=$(./ecutils -ec -ec-define -ec-define-p "$P" -ec-define-a "$A" -ec-define-b "$B" -ec-define-gx "$Gx" -ec-define-gy "$Gy" -ec-define-n "$N" -ec-define-h "$H" -ec-trapdoor -ec-trapdoor-k F -ec-trapdoor-gx "$Gx" -ec-trapdoor-gy "$Gy")
 
-    # Compara os resultados R e S obtidos acima e verifica se eles são iguais.
+    # Compare the R and S results obtained above and check if they are equal.
     if [ "$R" != "$S" ]; then
-        echo "  >  EC Erro: $R != $S"
+        echo "  >  EC Error: $R != $S"
         exit 1
     fi
     
-    # Extrai as coordenadas X e Y do resultado R.
+    # Extract the X and Y coordinates from the R result.
     Qx=$(echo "$R" | cut -d' ' -f1)
     Qy=$(echo "$R" | cut -d' ' -f2)
     
-    # Realiza uma operação de ponto com as coordenadas extraídas e obtém o resultado em R.
+    # Perform a point operation with the extracted coordinates and get the result in R.
     R=$(./ecutils -ec -ec-get "$curve_name" -ec-dot -ec-dot-px "$Gx" -ec-dot-py "$Gy" -ec-dot-qx "$Qx" -ec-dot-qy "$Qy")
 
-    # Realiza uma operação de definição de curva e ponto com os mesmos parâmetros e obtém o resultado em S.
+    # Perform a curve definition and point operation with the same parameters and get the result in S.
     S=$(./ecutils -ec -ec-define -ec-define-p "$P" -ec-define-a "$A" -ec-define-b "$B" -ec-define-gx "$Gx" -ec-define-gy "$Gy" -ec-define-n "$N" -ec-define-h "$H" -ec-dot -ec-dot-px "$Gx" -ec-dot-py "$Gy" -ec-dot-qx "$Qx" -ec-dot-qy "$Qy")
 
-    # Compara os resultados R e S obtidos acima e verifica se eles são iguais.
+    # Compare the R and S results obtained above and check if they are equal.
     if [ "$R" != "$S" ]; then
-        echo "  >  EC Erro: $R != $S"
+        echo "  >  EC Error: $R != $S"
         exit 1
     fi
 done
 
-# Obtém o tempo de término da execução do loop.
+# Get the end time of the loop execution.
 end_time=$(date +%s%N)
 
-# Calcula o tempo total de execução do loop e exibe-o.
+# Calculate the total loop execution time and display it.
 execution_time=$((($end_time - $start_time) / 1000000))
-echo "  >  Concluído, tempo de execução: ${execution_time} ms"
+echo "  >  Finished, execution time: ${execution_time} ms"
 ```
 
-### Testando ECDH
+### Testing ECDH
 
 ```bash
-# Exibe uma mensagem informativa indicando que os testes ECDH estão sendo executados.
-echo "  >  Testando ECDH: ..."
+# Display an informational message indicating that ECDH tests are being run.
+echo "  >  Testing ECDH: ..."
 
-# Obtém o tempo de início da execução do loop.
+# Get the start time of the loop execution.
 start_time=$(date +%s%N)
 
-# Loop que itera sobre as curvas elípticas definidas.
+# Loop through the defined elliptic curves.
 for curve in "${curve_names[@]}"; do
-    # Extrai o nome da curva (por exemplo, "secp192k1") da variável curve.
+    # Extract the name of the curve (e.g. "secp192k1") from the curve variable.
     curve_name="${curve%,*}"
 
-    # Obtém os parâmetros da curva elíptica a partir do array elliptic_curves.
+    # Get the parameters of the elliptic curve from the elliptic_curves array.
     P="${elliptic_curves[$curve_name,P]}"
     A="${elliptic_curves[$curve_name,A]}"
     B="${elliptic_curves[$curve_name,B]}"
@@ -498,64 +498,64 @@ for curve in "${curve_names[@]}"; do
     N="${elliptic_curves[$curve_name,N]}"
     H="${elliptic_curves[$curve_name,H]}"
     
-    # Executa a geração da chave pública usando ECDH e armazena o resultado em R.
+    # Execute public key generation using ECDH and store the result in R.
     R=$(./ecutils -ecdh -ecdh-ec-get "$curve_name" -ecdh-private-key F -ecdh-get-public-key)
 
-    # Executa a definição da curva e a geração da chave pública usando ECDH e armazena o resultado em S.
+    # Execute curve definition and public key generation using ECDH and store the result in S.
     S=$(./ecutils -ecdh -ecdh-ec-define -ecdh-ec-define-p "$P" -ecdh-ec-define-a "$A" -ecdh-ec-define-b "$B" -ecdh-ec-define-gx "$Gx" -ecdh-ec-define-gy "$Gy" -ecdh-ec-define-n "$N" -ecdh-ec-define-h "$H" -ecdh-private-key F -ecdh-get-public-key)
 
-    # Compara os resultados R e S obtidos acima e verifica se eles são iguais.
+    # Compare the R and S results obtained above and check if they are equal.
     if [ "$R" != "$S" ]; then
-        echo "  >  ECDH Erro: $R != $S"
+        echo "  >  ECDH Error: $R != $S"
         exit 1
     fi
     
-    # Executa a geração de outra chave pública usando ECDH, com uma chave privada (B).
+    # Execute the generation of another public key using ECDH, with a private key (B).
     B2=$(./ecutils -ecdh -ecdh-ec-get "$curve_name" -ecdh-private-key B -ecdh-get-public-key)
     BPx=$(echo "$B2" | cut -d' ' -f1)
     BPy=$(echo "$B2" | cut -d' ' -f2)
     
-    # Executa a geração de chave pública para outra entidade (F) usando ECDH.
+    # Execute public key generation for another entity (F) using ECDH.
     F=$(./ecutils -ecdh -ecdh-ec-get "$curve_name" -ecdh-private-key F -ecdh-get-public-key)
     FPx=$(echo "$F" | cut -d' ' -f1)
     FPy=$(echo "$F" | cut -d' ' -f2)
     
-    # Executa a operação de compartilhamento de chave ECDH usando as chaves privadas e públicas de B e F, armazenando o resultado em U.
+    # Perform ECDH key sharing operation using B and F's private and public keys, and store the result in U.
     U=$(./ecutils -ecdh -ecdh-ec-get "$curve_name" -ecdh-private-key B -ecdh-toshare -ecdh-toshare-public-key-px "$FPx" -ecdh-toshare-public-key-py "$FPy")
 
-    # Executa a operação de definição de curva e compartilhamento de chave ECDH usando as chaves privadas e públicas de B e F, armazenando o resultado em V.
+    # Perform curve definition and ECDH key sharing operation using B and F's private and public keys, storing the result in V.
     V=$(./ecutils -ecdh -ecdh-ec-define -ecdh-ec-define-p "$P" -ecdh-ec-define-a "$A" -ecdh-ec-define-b "$B" -ecdh-ec-define-gx "$Gx" -ecdh-ec-define-gy "$Gy" -ecdh-ec-define-n "$N" -ecdh-ec-define-h "$H" -ecdh-private-key F -ecdh-toshare -ecdh-toshare-public-key-px "$BPx" -ecdh-toshare-public-key-py "$BPy")
 
-    # Compara os resultados U e V obtidos acima e verifica se eles são iguais.
+    # Compare the U and V results obtained above and check if they are equal.
     if [ "$U" != "$V" ]; then
-        echo "  >  ECDH Erro: $U != $V"
+        echo "  >  ECDH Error: $U != $V"
         exit 1
     fi
 done
 
-# Obtém o tempo de término da execução do loop.
+# Get the end time of the loop execution.
 end_time=$(date +%s%N)
 
-# Calcula o tempo total de execução do loop e exibe-o.
+# Calculate the total loop execution time and display it.
 execution_time=$((($end_time - $start_time) / 1000000))
-echo "  >  Concluído, tempo de execução: ${execution_time} ms"
+echo "  >  Finished, execution time: ${execution_time} ms"
 ```
 
-### Testando ECDSA
+### Testing ECDSA
 
 ```bash
-# Exibe uma mensagem informativa indicando que os testes ECDSA estão sendo executados.
-echo "  >  Testando ECDSA: ..."
+# Display an informational message indicating that ECDSA tests are being run.
+echo "  >  Testing ECDSA: ..."
 
-# Obtém o tempo de início da execução do loop.
+# Get the start time of the loop execution.
 start_time=$(date +%s%N)
 
-# Loop que itera sobre as curvas elípticas definidas.
+# Loop through the defined elliptic curves.
 for curve in "${curve_names[@]}"; do
-    # Extrai o nome da curva (por exemplo, "secp192k1") da variável curve.
+    # Extract the name of the curve (e.g. "secp192k1") from the curve variable.
     curve_name="${curve%,*}"
 
-    # Obtém os parâmetros da curva elíptica a partir do array elliptic_curves.
+    # Get the parameters of the elliptic curve from the elliptic_curves array.
     P="${elliptic_curves[$curve_name,P]}"
     A="${elliptic_curves[$curve_name,A]}"
     B="${elliptic_curves[$curve_name,B]}"
@@ -564,68 +564,68 @@ for curve in "${curve_names[@]}"; do
     N="${elliptic_curves[$curve_name,N]}"
     H="${elliptic_curves[$curve_name,H]}"
     
-    # Executa a geração da chave pública usando ECDSA e armazena o resultado em R.
+    # Execute public key generation using ECDSA and store the result in R.
     R=$(./ecutils -ecdsa -ecdsa-ec-get "$curve_name" -ecdsa-private-key F -ecdsa-get-public-key)
 
-    # Executa a definição da curva e a geração da chave pública usando ECDSA e armazena o resultado em S.
+    # Execute curve definition and public key generation using ECDSA and store the result in S.
     S=$(./ecutils -ecdsa -ecdsa-ec-define -ecdsa-ec-define-p "$P" -ecdsa-ec-define-a "$A" -ecdsa-ec-define-b "$B" -ecdsa-ec-define-gx "$Gx" -ecdsa-ec-define-gy "$Gy" -ecdsa-ec-define-n "$N" -ecdsa-ec-define-h "$H" -ecdsa-private-key F -ecdsa-get-public-key)
 
-    # Compara os resultados R e S obtidos acima e verifica se eles são iguais.
+    # Compare the R and S results obtained above and check if they are equal.
     if [ "$R" != "$S" ]; then
-        echo "  >  ECDSA Erro: $R != $S"
+        echo "  >  ECDSA Error: $R != $S"
         exit 1
     fi
     
-    # Extrai as coordenadas X e Y da chave pública R.
+    # Extract the X and Y coordinates of the public key R.
     RPx=$(echo "$R" | cut -d' ' -f1)
     RPy=$(echo "$R" | cut -d' ' -f2)
     
-    # Define uma mensagem a ser assinada com ECDSA.
+    # Define a message to be signed with ECDSA.
     message="2F4811D9EC890E12785B32A8D8FB037A180D1A479E3E0D33"
     
-    # Executa a operação de assinatura ECDSA usando a chave privada F e a mensagem definida, armazenando o resultado em U.
+    # Execute the ECDSA signature operation using the private key F and the defined message, and store the result in U.
     U=$(./ecutils -ecdsa -ecdsa-ec-define -ecdsa-ec-define-p "$P" -ecdsa-ec-define-a "$A" -ecdsa-ec-define-b "$B" -ecdsa-ec-define-gx "$Gx" -ecdsa-ec-define-gy "$Gy" -ecdsa-ec-define-n "$N" -ecdsa-ec-define-h "$H" -ecdsa-private-key F -ecdsa-signature -ecdsa-signature-message "$message")
 
-    # Extrai as componentes "r" e "s" da assinatura U.
+    # Extract the "r" and "s" components of the U signature.
     UR=$(echo "$U" | cut -d' ' -f1)
     US=$(echo "$U" | cut -d' ' -f2)
     
-    # Executa a operação de verificação da assinatura ECDSA usando a chave pública R e a assinatura U, armazenando o resultado em V.
+    # Execute the ECDSA signature verification operation using the R public key and the U signature, and store the result in V.
     V=$(./ecutils -ecdsa -ecdsa-ec-get "$curve_name" -ecdsa-verify-signature -ecdsa-verify-signature-public-key-px "$RPx" -ecdsa-verify-signature-public-key-py "$RPy" -ecdsa-verify-signature-r "$UR" -ecdsa-verify-signature-s "$US" -ecdsa-verify-signature-signed-message "$message")
     
-    # Verifica se o resultado da verificação da assinatura é igual a "1", indicando que a assinatura é válida.
+    # Verify if the signature verification result equals "1", indicating that the signature is valid.
     if [ "$V" != "1" ]; then
-        echo "ECDSA Erro"
+        echo "ECDSA Error"
         exit 1
     fi
 done
 
-# Obtém o tempo de término da execução do loop.
+# Get the end time of the loop execution.
 end_time=$(date +%s%N)
 
-# Calcula o tempo total de execução do loop e exibe-o.
+# Calculate the total loop execution time and display it.
 execution_time=$((($end_time - $start_time) / 1000000))
-echo "  >  Concluído, tempo de execução: ${execution_time} ms"
+echo "  >  Finished, execution time: ${execution_time} ms"
 ```
 
-### Testando ECK
+### Testing ECK
 
 ```bash
-# Exibe uma mensagem informativa indicando que os testes ECK estão sendo executados.
-echo "  >  Testando ECK: ..."
+# Display an informational message indicating that ECK tests are being run.
+echo "  >  Testing ECK: ..."
 
-# Define as curvas elípticas a serem testadas.
+# Define the elliptic curves to be tested.
 curve_names=("secp384r1" "secp521r1")
 
-# Obtém o tempo de início da execução do loop.
+# Get the start time of the loop execution.
 start_time=$(date +%s%N)
 
-# Loop que itera sobre as curvas elípticas definidas.
+# Loop through the defined elliptic curves.
 for curve in "${curve_names[@]}"; do
-    # Extrai o nome da curva (por exemplo, "secp192k1") da variável curve.
+    # Extract the name of the curve (e.g., "secp192k1") from the curve variable.
     curve_name="${curve%,*}"
 
-    # Obtém os parâmetros da curva elíptica a partir do array elliptic_curves.
+    # Get the parameters of the elliptic curve from the elliptic_curves array.
     P="${elliptic_curves[$curve_name,P]}"
     A="${elliptic_curves[$curve_name,A]}"
     B="${elliptic_curves[$curve_name,B]}"
@@ -634,40 +634,40 @@ for curve in "${curve_names[@]}"; do
     N="${elliptic_curves[$curve_name,N]}"
     H="${elliptic_curves[$curve_name,H]}"
     
-    # Gera uma mensagem aleatória.
+    # Generate a random message.
     message=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 23 | head -n 1)
     
-    # Executa a definição da curva elíptica e a codificação da mensagem usando ECK.
+    # Perform elliptic curve definition and message encoding using ECK.
     R=$(./ecutils -eck -eck-ec-define -eck-ec-define-p "$P" -eck-ec-define-a "$A" -eck-ec-define-b "$B" -eck-ec-define-gx "$Gx" -eck-ec-define-gy "$Gy" -eck-ec-define-n "$N" -eck-ec-define-h "$H" -eck-encode -eck-encode-message "$message")
  
-    # Extrai as coordenadas X, Y e J da codificação R.
+    # Extract the X, Y, and J coordinates from the R encoding.
     Px=$(echo "$R" | cut -d' ' -f1)
     Py=$(echo "$R" | cut -d' ' -f2)
     J=$(echo "$R" | cut -d' ' -f3)
     
-    # Executa a operação de decodificação da mensagem usando as coordenadas Px, Py e J, obtendo a mensagem S.
+    # Perform message decoding operation using the coordinates Px, Py, and J, and get the message in S.
     S=$(./ecutils -eck -eck-ec-get "$curve_name" -eck-decode -eck-decode-px "$Px" -eck-decode-py "$Py" -eck-decode-j "$J")
   
-    # Compara a mensagem original com a mensagem decodificada e verifica se elas são iguais.
+    # Compare the original message with the decoded message and check if they are equal.
     if [ "$message" != "$S" ]; then
-        echo "  >  ECK Erro: $message != $S"
+        echo "  >  ECK Error: $message != $S"
         exit 1
     fi
     
 done
 
-# Obtém o tempo de término da execução do loop.
+# Get the end time of the loop execution.
 end_time=$(date +%s%N)
 
-# Calcula o tempo total de execução do loop e exibe-o.
+# Calculate the total loop execution time and display it.
 execution_time=$((($end_time - $start_time) / 1000000))
-echo "  >  Concluído, tempo de execução: ${execution_time} ms"
+echo "  >  Finished, execution time: ${execution_time} ms"
 ```
 
-### Testando ECMO
+### Testing ECMO
 
 ```bash
-# Exibe uma mensagem informativa indicando que os testes ECMO estão sendo executados.
+# Display an informational message indicating that ECMO tests are being run.
 echo "  >  Testing ECMO ASCII: ..."
 curve_names=("secp192k1" "secp192r1" "secp256k1" "secp256r1" "secp384r1" "secp521r1")
 start_time=$(date +%s%N)
@@ -749,5 +749,5 @@ execution_time=$((($end_time - $start_time) / 1000000))
 echo "  >  Finished, execution time: ${execution_time} ms"
 ```
 
-## Conclusão
-O *ecutils* é uma ferramenta versátil e poderosa para operações de criptografia baseadas em Curvas Elípticas. Com recursos que incluem a geração de curvas, operações de ponto e suporte a protocolos de segurança, ele se destaca como uma escolha valiosa para profissionais de segurança cibernética e desenvolvedores de software que precisam de criptografia avançada e segura. Com o *ecutils*, é possível realizar operações complexas enquanto mantém a segurança e a privacidade dos dados em mente. Sua flexibilidade e variedade de comandos tornam-no uma ferramenta essencial para lidar com desafios de criptografia em várias aplicações.
+## Conclusion
+The *ecutils* is a versatile and powerful tool for elliptic curve cryptography-based operations. With features including curve generation, point operations, and support for security protocols, it stands out as a valuable choice for cybersecurity professionals and software developers requiring advanced, secure cryptography. With *ecutils*, complex operations can be performed while keeping data security and privacy at the forefront. Its flexibility and variety of commands make it an essential tool for dealing with cryptography challenges across various applications.
