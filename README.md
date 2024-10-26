@@ -4,7 +4,7 @@
 **ecutils**
 
 ## Version of the *Software*
-**1.1.1**
+**1.1.2**
 
 ## *Software* Description
 

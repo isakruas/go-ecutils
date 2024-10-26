@@ -5,7 +5,7 @@ PKG="$PROJECT_NAME"
 PKG_LIST=$(go list "${PKG}/..." | grep -v /vendor/)
 GO_FILES=$(find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 BUILDDATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-CODEVERSION="1.1.1"
+CODEVERSION="1.1.2"
 CODEBUILDREVISION=$(git rev-parse HEAD)
 TARGETS=(
     "linux/386"
