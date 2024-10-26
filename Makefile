@@ -6,7 +6,7 @@ GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 GOARCH := $(shell go env GOARCH)
 GOOS := $(shell go env GOOS)
 BUILDDATE := $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
-CODEVERSION := "1.1.2"
+CODEVERSION := "1.1.3"
 CODEBUILDREVISION := $(shell git rev-parse HEAD)
 .PHONY: all dep build clean test coverage zip lint
 
