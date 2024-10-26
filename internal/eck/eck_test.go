@@ -2,10 +2,11 @@ package eck_test
 
 import (
 	"fmt"
-	"go-ecutils/internal/ec"
-	"go-ecutils/internal/eck"
 	"math/big"
 	"testing"
+
+	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/internal/eck"
 )
 
 func TestECKEncodeDefault(t *testing.T) {

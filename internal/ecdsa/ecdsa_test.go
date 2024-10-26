@@ -1,10 +1,11 @@
 package ecdsa_test
 
 import (
-	"go-ecutils/internal/ec"
-	"go-ecutils/internal/ecdsa"
 	"math/big"
 	"testing"
+
+	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/internal/ecdsa"
 )
 
 func TestECDSAPublicKey(t *testing.T) {

@@ -1,10 +1,11 @@
 package ecdh_test
 
 import (
-	"go-ecutils/internal/ec"
-	"go-ecutils/internal/ecdh"
 	"math/big"
 	"testing"
+
+	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/internal/ecdh"
 )
 
 func TestECDHPublicKey(t *testing.T) {

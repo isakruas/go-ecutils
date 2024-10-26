@@ -11,10 +11,11 @@
 package ecmo
 
 import (
-	"go-ecutils/internal/ec"
-	"go-ecutils/internal/ecdsa"
-	"go-ecutils/internal/eck"
 	"math/big"
+
+	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/internal/ecdsa"
+	"github.com/isakruas/go-ecutils/internal/eck"
 )
 
 // ECMO represents the Massey–Omura elliptic curve protocol.

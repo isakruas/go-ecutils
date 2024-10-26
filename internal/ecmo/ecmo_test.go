@@ -2,10 +2,11 @@ package ecmo_test
 
 import (
 	"crypto/rand"
-	"go-ecutils/internal/ec"
-	"go-ecutils/internal/ecmo"
 	"math/big"
 	"testing"
+
+	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/internal/ecmo"
 )
 
 func TestECMOPublicKey(t *testing.T) {

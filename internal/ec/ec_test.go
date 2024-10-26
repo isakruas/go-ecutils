@@ -1,9 +1,10 @@
 package ec_test
 
 import (
-	"go-ecutils/internal/ec"
 	"math/big"
 	"testing"
+
+	"github.com/isakruas/go-ecutils/internal/ec"
 )
 
 func TestECTrapdoorPanic(t *testing.T) {
