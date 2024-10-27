@@ -1,11 +1,11 @@
 package main
 
 import (
-	pkg_ec "github.com/isakruas/go-ecutils/internal/ec"
-	pkg_ecdh "github.com/isakruas/go-ecutils/internal/ecdh"
-	pkg_ecdsa "github.com/isakruas/go-ecutils/internal/ecdsa"
-	pkg_eck "github.com/isakruas/go-ecutils/internal/eck"
-	pkg_ecmo "github.com/isakruas/go-ecutils/internal/ecmo"
+	pkg_ec "github.com/isakruas/go-ecutils/pkg/ec"
+	pkg_ecdh "github.com/isakruas/go-ecutils/pkg/ecdh"
+	pkg_ecdsa "github.com/isakruas/go-ecutils/pkg/ecdsa"
+	pkg_eck "github.com/isakruas/go-ecutils/pkg/eck"
+	pkg_ecmo "github.com/isakruas/go-ecutils/pkg/ecmo"
 
 	"flag"
 	"fmt"

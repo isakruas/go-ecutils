@@ -9,7 +9,7 @@ package ecdh
 import (
 	"math/big"
 
-	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/pkg/ec"
 )
 
 // ECDH represents an Elliptic Curve Diffie Hellman entity with a curve and a private key

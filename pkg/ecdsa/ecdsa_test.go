@@ -4,8 +4,8 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/isakruas/go-ecutils/internal/ec"
-	"github.com/isakruas/go-ecutils/internal/ecdsa"
+	"github.com/isakruas/go-ecutils/pkg/ec"
+	"github.com/isakruas/go-ecutils/pkg/ecdsa"
 )
 
 func TestECDSAPublicKey(t *testing.T) {

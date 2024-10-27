@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/isakruas/go-ecutils/internal/ec"
-	"github.com/isakruas/go-ecutils/internal/eck"
+	"github.com/isakruas/go-ecutils/pkg/ec"
+	"github.com/isakruas/go-ecutils/pkg/eck"
 )
 
 func TestECKEncodeDefault(t *testing.T) {

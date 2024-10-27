@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/isakruas/go-ecutils/internal/ec"
+	"github.com/isakruas/go-ecutils/pkg/ec"
 )
 
 // ECK structure holding an elliptic curve
